@@ -1,0 +1,4 @@
+<form [formGroup]="form">
+  <fty-person-contact *ngFor="let person of form.controls.invitees; index as i" formControlName="i"></fty-person-contact>
+  <fty-event-form formControlName="event"></fty-event-form>
+</form>

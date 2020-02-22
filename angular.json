@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "forms-typed": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "forms-typed"
+    }
+  },
+  "defaultProject": "forms-typed",
+  "cli": {
+    "analytics": "3132a3c7-80f3-4cb7-9206-d2c1b7e1345a"
+  }
 }
