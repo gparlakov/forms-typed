@@ -1,12 +1,4 @@
-import {
-  FormGroup,
-  AbstractControl,
-  FormArray,
-  Validators,
-  FormControl,
-  ValidatorFn,
-  AsyncValidatorFn
-} from '@angular/forms';
+import { FormGroup, AbstractControl, Validators, FormControl, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 export type Methods = keyof Pick<
@@ -47,6 +39,11 @@ export function forEachControlIn(form: FormGroupLike | FormArrayLike) {
               (c[m] as any)();
             }
           });
+
+          // catch the case where we have a control that is form array - so for each of the children call methods
+          if ((c as any).controls != null) {
+            forEachControlIn((c as any).controls).call(...methods);
+          }
         });
       }
       return composer;
