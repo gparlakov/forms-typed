@@ -1,6 +1,6 @@
 import { Component, OnInit, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
-import { typedFormGroup, forEachControlIn } from '../shared/forms-util';
+import { typedFormGroup, forEachControlIn, typedFormControl } from '../shared/forms-util';
 import { EventForm } from './event-form.model';
 
 @Component({
@@ -11,9 +11,9 @@ import { EventForm } from './event-form.model';
 export class EventFormComponent implements OnInit, ControlValueAccessor {
   form = typedFormGroup<EventForm>({
     eventName: new FormControl(null, Validators.required),
-    location: new FormControl(),
-    dateStart: new FormControl(new Date()),
-    dateEnd: new FormControl()
+    location: typedFormControl('1'),
+    dateStart: typedFormControl(new Date()),
+    dateEnd: typedFormControl()
   });
   callingOnTouchFromBelow: boolean;
 

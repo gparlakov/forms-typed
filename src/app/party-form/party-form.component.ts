@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { typedFormGroup, forEachControlIn, TypedFormControl } from '../shared/forms-util';
+import {
+  typedFormGroup,
+  forEachControlIn,
+  TypedFormControl,
+  TypedFormGroup,
+  typedFormControl
+} from '../shared/forms-util';
 import { PartyForm } from './party-form.model';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { EventForm } from '../event-form/event-form.model';
 
@@ -12,9 +18,14 @@ import { EventForm } from '../event-form/event-form.model';
 })
 export class PartyFormComponent implements OnInit {
   form = typedFormGroup<PartyForm>({
-    event: new FormControl({}) as TypedFormControl<EventForm>,
+    event: typedFormControl({
+      location: 'my location',
+      dateStart: new Date(),
+      eventName: 'my'
+    } as EventForm),
     invitees: new FormControl()
   });
+
   submitting = false;
 
   constructor() {}
@@ -32,6 +43,7 @@ export class PartyFormComponent implements OnInit {
     } else if (this.form.valid) {
       // do submit
       this.submitting = false;
+      console.log(this.form.value);
     } else {
       this.submitting = false;
     }

@@ -1,4 +1,12 @@
-import { FormGroup, AbstractControl, FormArray, Validators, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  AbstractControl,
+  FormArray,
+  Validators,
+  FormControl,
+  ValidatorFn,
+  AsyncValidatorFn
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 
 export type Methods = keyof Pick<
@@ -94,31 +102,39 @@ export function forEachControlIn(form: FormGroupLike | FormArrayLike) {
   return composer;
 }
 
-export function typedFormGroup<K>(
-  controls: { [key in keyof K]: AbstractControl }
-): {
-  controls: { [Key in keyof typeof controls]: AbstractControl };
+export interface TypedFormGroup<K> extends Omit<FormGroup, 'valueChanges' | 'controls' | 'statusChanges'> {
+  controls: { [Key in keyof K]: TypedFormControl<K[Key]> };
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
-} & Omit<FormGroup, 'valueChanges' | 'controls' | 'statusChanges'> {
+}
+
+export function typedFormGroup<K>(controls: { [key in keyof K]: TypedFormControl<K[key]> }): TypedFormGroup<K> {
   return new FormGroup(controls) as any;
 }
 
-export type TypedFormControl<K> = {
+export interface TypedFormControl<K> extends AbstractControl {
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
-} & Omit<AbstractControl, 'valueChanges' | 'statusChanges'>;
+}
 
-// // tslint:disable-next-line:interface-over-type-literal
-// export type Model = {
-//   name: string;
-//   email: string;
-// };
+export function typedFormControl<T>(
+  v?: T,
+  validators?: ValidatorFn,
+  asyncValidators?: AsyncValidatorFn
+): TypedFormControl<T> {
+  return new FormControl(v, validators, asyncValidators);
+}
 
-// const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
-// f.valueChanges.subscribe(v => console.log(v));
-// console.log(f.controls.email);
+// tslint:disable-next-line:interface-over-type-literal
+export type Model = {
+  name: string;
+  email: string;
+};
+
+const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
+f.valueChanges.subscribe(v => console.log(v));
+console.log(f.controls.email);
 
 // const f1 = new FormGroup({ t: new FormControl() });
-// console.log(f1.controls.any.value);
+// console.log(f1.controls.any.value); // will break runtime
 // f1.valueChanges.subscribe(v => console.log(v));
