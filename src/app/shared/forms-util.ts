@@ -1,11 +1,34 @@
 import { FormGroup, AbstractControl, FormArray, Validators, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
-export type Methods = keyof Pick<AbstractControl, 'markAsDirty' | 'markAsTouched' | 'updateValueAndValidity' | 'disable' | 'enable'>;
+export type Methods = keyof Pick<
+  AbstractControl,
+  | 'markAsDirty'
+  | 'markAsTouched'
+  | 'updateValueAndValidity'
+  | 'disable'
+  | 'enable'
+  | 'markAsUntouched'
+  | 'markAsPristine'
+  | 'markAsPending'
+>;
 
-export function forEachControlIn(form: FormGroup | FormArray) {
-  const controls: AbstractControl[] = Array.isArray(form.controls)
-    ? form.controls
-    : Object.getOwnPropertyNames(form.controls).map(name => (form as FormGroup).controls[name]);
+// tslint:disable-next-line:interface-over-type-literal
+type FormGroupLike = {
+  controls: { [key: string]: AbstractControl };
+};
+// tslint:disable-next-line:interface-over-type-literal
+type FormArrayLike = {
+  controls: AbstractControl[];
+};
+
+export function forEachControlIn(form: FormGroupLike | FormArrayLike) {
+  const controls: AbstractControl[] =
+    form != null && form.controls != null
+      ? Array.isArray(form.controls)
+        ? form.controls
+        : Object.getOwnPropertyNames(form.controls).map(name => (form as FormGroupLike).controls[name])
+      : [];
 
   const composer = {
     call(...methods: Methods[]) {
@@ -27,15 +50,27 @@ export function forEachControlIn(form: FormGroup | FormArray) {
           markAsDirtyOriginal();
           composer.call('markAsDirty');
         };
+        const markAsPristineOriginal = c.markAsPristine.bind(c);
+        c.markAsPristine = () => {
+          markAsPristineOriginal();
+          composer.call('markAsPristine');
+        };
       }
       return composer;
     },
-    markAsTouchedSimultaneouslyWith(c: AbstractControl) {
+    markAsTouchedSimultaneouslyWith(c: AbstractControl, comingFromBelow?: () => boolean) {
       if (c != null) {
         const markAsTouchedOriginal = c.markAsTouched.bind(c);
         c.markAsTouched = () => {
           markAsTouchedOriginal();
-          composer.call('markAsTouched');
+          if (!comingFromBelow || !comingFromBelow()) {
+            composer.call('markAsTouched');
+          }
+        };
+        const markAsUntouchedOriginal = c.markAsUntouched.bind(c);
+        c.markAsUntouched = () => {
+          markAsUntouchedOriginal();
+          composer.call('markAsUntouched');
         };
       }
       return composer;
@@ -59,14 +94,31 @@ export function forEachControlIn(form: FormGroup | FormArray) {
   return composer;
 }
 
-export function typedFormGroup<K>(controls: { [key in keyof K]: AbstractControl }) {
-  return new FormGroup(controls) as FormGroup & { controls: { [Key in keyof typeof controls]: AbstractControl } };
+export function typedFormGroup<K>(
+  controls: { [key in keyof K]: AbstractControl }
+): {
+  controls: { [Key in keyof typeof controls]: AbstractControl };
+  valueChanges: Observable<K>;
+  statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
+} & Omit<FormGroup, 'valueChanges' | 'controls' | 'statusChanges'> {
+  return new FormGroup(controls) as any;
 }
 
-// tslint:disable-next-line:interface-over-type-literal
-export type Model = {
-  name: string;
-  email: string;
-};
+export type TypedFormControl<K> = {
+  valueChanges: Observable<K>;
+  statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
+} & Omit<AbstractControl, 'valueChanges' | 'statusChanges'>;
 
-const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
+// // tslint:disable-next-line:interface-over-type-literal
+// export type Model = {
+//   name: string;
+//   email: string;
+// };
+
+// const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
+// f.valueChanges.subscribe(v => console.log(v));
+// console.log(f.controls.email);
+
+// const f1 = new FormGroup({ t: new FormControl() });
+// console.log(f1.controls.any.value);
+// f1.valueChanges.subscribe(v => console.log(v));

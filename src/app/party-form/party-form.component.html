@@ -1,4 +1,5 @@
-<form [formGroup]="form">
-  <fty-person-contact *ngFor="let person of form.controls.invitees; index as i" formControlName="i"></fty-person-contact>
+<form [formGroup]="form" (ngSubmit)="onPartyFormSubmit()">
+  <!-- <fty-person-contact *ngFor="let person of form.controls.invitees; index as i" formControlName="i"></fty-person-contact> -->
   <fty-event-form formControlName="event"></fty-event-form>
+  <button matButton type="submit">Submit</button>
 </form>

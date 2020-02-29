@@ -1,1 +1,24 @@
-<p>event-form works!</p>
+<fieldset [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Event name</mat-label>
+    <input matInput formControlName="eventName" required />
+    <mat-error>Event name is required</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Event location</mat-label>
+    <input matInput formControlName="location" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Event start date</mat-label>
+    <input matInput formControlName="dateStart" required [matDatepicker]="dateStartPicker" />
+    <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
+    <mat-datepicker #dateStartPicker></mat-datepicker>
+    <mat-error>Please provide start date</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Event end time</mat-label>
+    <input matInput formControlName="dateEnd" [matDatepicker]="dateEndPicker" />
+    <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
+    <mat-datepicker #dateEndPicker></mat-datepicker>
+  </mat-form-field>
+</fieldset>

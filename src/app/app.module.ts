@@ -6,19 +6,27 @@ import { PersonContactComponent } from './person-contact/person-contact.componen
 import { PartyFormComponent } from './party-form/party-form.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PersonContactComponent,
-    PartyFormComponent,
-    EventFormComponent
-  ],
+  declarations: [AppComponent, PersonContactComponent, PartyFormComponent, EventFormComponent],
   imports: [
     BrowserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatCommonModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
