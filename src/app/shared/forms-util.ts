@@ -40,7 +40,7 @@ export function forEachControlIn(form: FormGroupLike | FormArrayLike) {
             }
           });
 
-          // catch the case where we have a control that is form array - so for each of the children call methods
+          // catch the case where we have a control that is form array/group - so for each of the children call methods
           if ((c as any).controls != null) {
             forEachControlIn((c as any).controls).call(...methods);
           }
