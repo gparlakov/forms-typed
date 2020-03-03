@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {
   typedFormGroup,
   forEachControlIn,
-  TypedFormControl,
-  TypedFormGroup,
   typedFormControl
 } from '../shared/forms-util';
 import { PartyForm } from './party-form.model';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { EventForm } from '../event-form/event-form.model';
+import {  eventDefault } from '../event-form/event-form.model';
 
 @Component({
   selector: 'fty-party-form',
@@ -18,34 +16,32 @@ import { EventForm } from '../event-form/event-form.model';
 })
 export class PartyFormComponent implements OnInit {
   form = typedFormGroup<PartyForm>({
-    event: typedFormControl({
-      location: 'my location',
-      dateStart: new Date(),
-      eventName: 'my'
-    } as EventForm),
+    event: typedFormControl(eventDefault()),
     invitees: new FormControl()
   });
 
-  submitting = false;
+  private submitting = false;
 
   constructor() {}
 
   ngOnInit(): void {}
 
   onPartyFormSubmit() {
-    this.submitting = true;
+    if (!this.submitting) {
+      this.submitting = true;
 
-    forEachControlIn(this.form).call('markAsTouched'); // to show validation
-    forEachControlIn(this.form).call('updateValueAndValidity');
+      forEachControlIn(this.form).call('markAsTouched'); // to show validation
+      forEachControlIn(this.form).call('updateValueAndValidity');
 
-    if (this.form.pending) {
-      this.form.statusChanges.pipe(take(1)).subscribe(() => this.onPartyFormSubmit());
-    } else if (this.form.valid) {
-      // do submit
-      this.submitting = false;
-      console.log(this.form.value);
-    } else {
-      this.submitting = false;
+      if (this.form.pending) {
+        this.form.statusChanges.pipe(take(1)).subscribe(() => this.onPartyFormSubmit());
+      } else if (this.form.valid) {
+        // do submit
+        this.submitting = false;
+        console.log(this.form.value);
+      } else {
+        this.submitting = false;
+      }
     }
   }
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
+import { ControlValueAccessor, NgControl, Validators } from '@angular/forms';
 import { typedFormGroup, forEachControlIn, typedFormControl } from '../shared/forms-util';
-import { EventForm } from './event-form.model';
+import { EventForm, eventDefault } from './event-form.model';
+
+const { dateStart: defaultDateStart, timeStart: defaultTimeStart } = eventDefault();
 
 @Component({
   selector: 'fty-event-form',
@@ -10,10 +12,10 @@ import { EventForm } from './event-form.model';
 })
 export class EventFormComponent implements OnInit, ControlValueAccessor {
   form = typedFormGroup<EventForm>({
-    eventName: new FormControl(null, Validators.required),
-    location: typedFormControl('1'),
-    dateStart: typedFormControl(new Date()),
-    dateEnd: typedFormControl()
+    eventName: typedFormControl<string>(undefined, Validators.required),
+    location: typedFormControl(),
+    dateStart: typedFormControl(defaultDateStart),
+    timeStart: typedFormControl(defaultTimeStart)
   });
   callingOnTouchFromBelow: boolean;
 
