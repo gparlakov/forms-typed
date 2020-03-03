@@ -15,8 +15,8 @@ export class PersonContactComponent extends ControlValueAccessorConnector<Person
     super(
       controlDirective,
       typedFormGroup<PersonContact>({
-        name: typedFormControl(),
-        email: typedFormControl()
+        name: typedFormControl<string>(),
+        email: typedFormControl<string>()
       })
     );
   }

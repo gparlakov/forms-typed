@@ -12,6 +12,8 @@ export class ShowFormControlComponent implements OnInit {
   dragging?: boolean;
   width = 50;
   height?: number;
+
+  @Input()
   closed?: boolean;
   offset: number;
 
@@ -54,7 +56,7 @@ export class ShowFormControlComponent implements OnInit {
     this.closed = !this.closed;
   }
 
-  onDragStart(drag: DragEvent) {
+  onDragStart(drag: MouseEvent | DragEvent) {
     drag.preventDefault();
     this.dragging = true;
   }

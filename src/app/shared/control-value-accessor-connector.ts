@@ -1,10 +1,14 @@
-import { OnInit, Optional, Self } from '@angular/core';
+import { OnInit, Optional, Self, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { forEachControlIn, TypedFormGroup } from './forms-util';
+import { Subscription } from 'rxjs';
 
-export class ControlValueAccessorConnector<T> implements OnInit, ControlValueAccessor {
+export class ControlValueAccessorConnector<T> implements OnInit, OnDestroy, ControlValueAccessor {
+  protected subs = new Subscription();
+  protected callingOnTouchFromBelow: boolean;
+
   public form: TypedFormGroup<T>;
-  callingOnTouchFromBelow: boolean;
+
   constructor(@Optional() @Self() private directive: NgControl, form: TypedFormGroup<T>) {
     if (directive) {
       directive.valueAccessor = this;
@@ -19,16 +23,22 @@ export class ControlValueAccessorConnector<T> implements OnInit, ControlValueAcc
         .addValidatorsTo(this.directive.control);
     }
 
-    this.form.valueChanges.subscribe(v => this.onChange(v));
-    this.form.statusChanges.subscribe(s => {
+    const values = this.form.valueChanges.subscribe(v => this.onChange(v));
+    const statuses = this.form.statusChanges.subscribe(s => {
       if (this.form.touched) {
         this.callingOnTouchFromBelow = true;
         this.onTouch();
         this.callingOnTouchFromBelow = false;
       }
     });
+
+    this.subs.add(values);
+    this.subs.add(statuses);
   }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
   private onChange = (_: T) => {};
   private onTouch = () => {};
   writeValue(obj: any): void {

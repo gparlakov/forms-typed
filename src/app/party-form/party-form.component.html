@@ -1,8 +1,19 @@
-<form [formGroup]="form" (ngSubmit)="onPartyFormSubmit()">
-  <!-- <fty-person-contact *ngFor="let person of form.controls.invitees; index as i" formControlName="i"></fty-person-contact> -->
-  <fty-event-form class="fieldset" formControlName="event"></fty-event-form>
-  <fty-person-contact class="fieldset"  formControlName="person"></fty-person-contact>
-  <button matButton type="submit">Submit</button>
+<form [formGroup]="form" (ngSubmit)="onPartyFormSubmit()" class="party-form">
+  <fieldset class="fieldset">
+    <legend>Event</legend>
+    <fty-event-form formControlName="event"></fty-event-form>
+  </fieldset>
+  <fieldset class="fieldset">
+    <legend>Invited</legend>
+    <fty-person-contact
+      *ngFor="let person of invitees?.controls; let i = index"
+      [formControl]="person"
+    ></fty-person-contact>
+    <button type="button" mat-mini-fab color="primary" (click)="onAddInviteeClick(invitees)" class="add-button">+</button>
+
+    <button type="button" mat-mini-fab color="warn" (click)="onRemoveInviteeClick(invitees)">-</button>
+  </fieldset>
+  <button mat-raised-button color="primary" type="submit">Submit</button>
 </form>
 
-<fty-show-form-control [control]="form" name="Party Form"></fty-show-form-control>
+<fty-show-form-control [control]="form" name="Party Form" [closed]="true"></fty-show-form-control>

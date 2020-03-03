@@ -1,4 +1,12 @@
-import { FormGroup, AbstractControl, Validators, FormControl, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
+import {
+  FormGroup,
+  AbstractControl,
+  Validators,
+  FormControl,
+  ValidatorFn,
+  AsyncValidatorFn,
+  FormArray
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 
 export type Methods = keyof Pick<
@@ -17,12 +25,8 @@ export type Methods = keyof Pick<
 type FormGroupLike = {
   controls: { [key: string]: AbstractControl };
 };
-// tslint:disable-next-line:interface-over-type-literal
-type FormArrayLike = {
-  controls: AbstractControl[];
-};
 
-export function forEachControlIn(form: FormGroupLike | FormArrayLike) {
+export function forEachControlIn(form: FormGroup | FormArray | TypedFormGroup<any> | TypedFormArray<any>) {
   const controls: AbstractControl[] =
     form != null && form.controls != null
       ? Array.isArray(form.controls)
@@ -42,7 +46,7 @@ export function forEachControlIn(form: FormGroupLike | FormArrayLike) {
 
           // catch the case where we have a control that is form array/group - so for each of the children call methods
           if ((c as any).controls != null) {
-            forEachControlIn((c as any).controls).call(...methods);
+            forEachControlIn(c as FormArray | FormGroup | TypedFormGroup<any> | TypedFormArray<any>).call(...methods);
           }
         });
       }
@@ -103,32 +107,52 @@ export interface FormEventOptions {
   emitEvent?: boolean;
   onlySelf?: boolean;
 }
-export interface TypedFormGroup<K>
-  extends Omit<FormGroup, 'valueChanges' | 'controls' | 'statusChanges' | 'patchValue' | 'setValue'> {
-  controls: { [Key in keyof K]: TypedFormControl<K[Key]> };
+
+export interface TypedFormControl<K> extends FormControl {
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
   patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
   setValue: (v: K, options?: FormEventOptions) => void;
 }
-
-export function typedFormGroup<K>(controls: { [key in keyof K]: TypedFormControl<K[key]> }): TypedFormGroup<K> {
-  return new FormGroup(controls) as any;
-}
-
-export interface TypedFormControl<K> extends AbstractControl {
-  valueChanges: Observable<K>;
-  statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
-  patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
-  setValue: (v: K, options?: FormEventOptions) => void;
-}
-
 export function typedFormControl<T>(
   v?: T,
   validators?: ValidatorFn,
   asyncValidators?: AsyncValidatorFn
 ): TypedFormControl<T> {
   return new FormControl(v, validators, asyncValidators);
+}
+
+export interface TypedFormGroup<K> extends FormGroup {
+  controls: {
+    [key in keyof K]: K[key] extends Array<infer T> ? TypedFormArray<T[]> : TypedFormControl<K[key]> | TypedFormGroup<K[key]>
+  };
+  valueChanges: Observable<K>;
+  statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
+  patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
+  setValue: (v: K, options?: FormEventOptions) => void;
+}
+
+export function typedFormGroup<K>(
+  controls: {
+    [key in keyof K]: K[key] extends Array<infer T> ? TypedFormArray<T[]> : TypedFormControl<K[key]> | TypedFormGroup<K[key]>
+  }
+): TypedFormGroup<K> {
+  return new FormGroup(controls) as any;
+}
+
+export interface TypedFormArray<K extends Array<T>, T = any> extends FormArray {
+  valueChanges: Observable<K>;
+  statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
+  patchValue: (v: K, options?: FormEventOptions) => void;
+  setValue: (v: K, options?: FormEventOptions) => void;
+  controls: Array<TypedFormControl<T>>;
+}
+export function typedFormArray<K = any>(
+  v: Array<TypedFormControl<K>>,
+  validators?: ValidatorFn,
+  asyncValidators?: AsyncValidatorFn
+): TypedFormArray<K[]> {
+  return new FormArray(v, validators, asyncValidators) as any;
 }
 
 // tslint:disable-next-line:interface-over-type-literal

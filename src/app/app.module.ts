@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ShowFormControlModule } from './shared/show-form-control/show-form-control.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [AppComponent, PersonContactComponent, PartyFormComponent, EventFormComponent],
@@ -26,7 +28,9 @@ import { ShowFormControlModule } from './shared/show-form-control/show-form-cont
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ShowFormControlModule
+    ShowFormControlModule,
+    MatIconModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

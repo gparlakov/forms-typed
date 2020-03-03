@@ -13,7 +13,7 @@ const { dateStart: defaultDateStart, timeStart: defaultTimeStart } = eventDefaul
 export class EventFormComponent implements OnInit, ControlValueAccessor {
   form = typedFormGroup<EventForm>({
     eventName: typedFormControl<string>(undefined, Validators.required),
-    location: typedFormControl(),
+    location: typedFormControl<string>(),
     dateStart: typedFormControl(defaultDateStart),
     timeStart: typedFormControl(defaultTimeStart)
   });
