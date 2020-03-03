@@ -9,11 +9,15 @@
       *ngFor="let person of invitees?.controls; let i = index"
       [formControl]="person"
     ></fty-person-contact>
-    <button type="button" mat-mini-fab color="primary" (click)="onAddInviteeClick(invitees)" class="add-button">+</button>
+    <button type="button" mat-mini-fab color="primary" (click)="onAddInviteeClick(invitees)" class="add-button">
+      +
+    </button>
 
     <button type="button" mat-mini-fab color="warn" (click)="onRemoveInviteeClick(invitees)">-</button>
   </fieldset>
-  <button mat-raised-button color="primary" type="submit">Submit</button>
+  <button mat-raised-button color="primary" type="submit">
+    Submit <mat-spinner *ngIf="submitting" color="warn" diameter="15" style="display:inline-block"></mat-spinner>
+  </button>
 </form>
 
 <fty-show-form-control [control]="form" name="Party Form" [closed]="true"></fty-show-form-control>

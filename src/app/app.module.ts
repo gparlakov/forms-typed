@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ShowFormControlModule } from './shared/show-form-control/show-form-control.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [AppComponent, PersonContactComponent, PartyFormComponent, EventFormComponent],
@@ -30,7 +31,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatNativeDateModule,
     ShowFormControlModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

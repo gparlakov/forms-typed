@@ -27,7 +27,7 @@ export class PartyFormComponent implements OnInit {
     return this.form.controls.invitees as TypedFormArray<PersonContact[]>;
   }
 
-  private submitting = false;
+  submitting = false;
 
   constructor() {}
 
@@ -47,9 +47,11 @@ export class PartyFormComponent implements OnInit {
       if (this.form.pending) {
         this.form.statusChanges.pipe(take(1)).subscribe(() => this.onPartyFormSubmit());
       } else if (this.form.valid) {
-        // do submit
-        this.submitting = false;
-        console.log(this.form.value);
+        setTimeout(() => {
+          // do submit
+          this.submitting = false;
+          console.log(this.form.value);
+        }, 5000);
       } else {
         this.submitting = false;
       }
