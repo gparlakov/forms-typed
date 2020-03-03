@@ -22,10 +22,13 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "incremental": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "skipTemplateCodegen": false,
+    "strictTemplates": true
   }
 }

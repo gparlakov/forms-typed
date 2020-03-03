@@ -12,6 +12,7 @@ import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ShowFormControlModule } from './shared/show-form-control/show-form-control.module';
 
 @NgModule({
   declarations: [AppComponent, PersonContactComponent, PartyFormComponent, EventFormComponent],
@@ -24,7 +25,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ShowFormControlModule
   ],
   providers: [],
   bootstrap: [AppComponent]
