@@ -99,10 +99,17 @@ export function forEachControlIn(form: FormGroupLike | FormArrayLike) {
   return composer;
 }
 
-export interface TypedFormGroup<K> extends Omit<FormGroup, 'valueChanges' | 'controls' | 'statusChanges'> {
+export interface FormEventOptions {
+  emitEvent?: boolean;
+  onlySelf?: boolean;
+}
+export interface TypedFormGroup<K>
+  extends Omit<FormGroup, 'valueChanges' | 'controls' | 'statusChanges' | 'patchValue' | 'setValue'> {
   controls: { [Key in keyof K]: TypedFormControl<K[Key]> };
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
+  patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
+  setValue: (v: K, options?: FormEventOptions) => void;
 }
 
 export function typedFormGroup<K>(controls: { [key in keyof K]: TypedFormControl<K[key]> }): TypedFormGroup<K> {
@@ -112,6 +119,8 @@ export function typedFormGroup<K>(controls: { [key in keyof K]: TypedFormControl
 export interface TypedFormControl<K> extends AbstractControl {
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
+  patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
+  setValue: (v: K, options?: FormEventOptions) => void;
 }
 
 export function typedFormControl<T>(
@@ -132,6 +141,6 @@ const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormContro
 f.valueChanges.subscribe(v => console.log(v));
 console.log(f.controls.email);
 
-// const f1 = new FormGroup({ t: new FormControl() });
+const f1 = new FormGroup({ t: new FormControl() });
 // console.log(f1.controls.any.value); // will break runtime
 // f1.valueChanges.subscribe(v => console.log(v));
