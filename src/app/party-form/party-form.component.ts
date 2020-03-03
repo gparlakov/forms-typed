@@ -17,7 +17,7 @@ import {  eventDefault } from '../event-form/event-form.model';
 export class PartyFormComponent implements OnInit {
   form = typedFormGroup<PartyForm>({
     event: typedFormControl(eventDefault()),
-    invitees: new FormControl()
+    person: typedFormControl()
   });
 
   private submitting = false;

@@ -1,1 +1,11 @@
-<p>person-contact works!</p>
+<fieldset [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" required/>
+    <mat-error>Please provide person's email</mat-error>
+  </mat-form-field>
+</fieldset>
