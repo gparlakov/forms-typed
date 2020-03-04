@@ -1,15 +1,16 @@
 import { OnInit, Optional, Self, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { forEachControlIn, TypedFormGroup } from './forms-util';
+import { forEachControlIn, TypedFormGroup, Controls } from './forms-util';
 import { Subscription } from 'rxjs';
 
-export class ControlValueAccessorConnector<T> implements OnInit, OnDestroy, ControlValueAccessor {
+export class ControlValueAccessorConnector<T, C extends Controls<T> = Controls<T>>
+  implements OnInit, OnDestroy, ControlValueAccessor {
   protected subs = new Subscription();
   protected callingOnTouchFromBelow: boolean;
 
-  public form: TypedFormGroup<T>;
+  public form: TypedFormGroup<T, C>;
 
-  constructor(@Optional() @Self() private directive: NgControl, form: TypedFormGroup<T>) {
+  constructor(@Optional() @Self() private directive: NgControl, form: TypedFormGroup<T, C>) {
     if (directive) {
       directive.valueAccessor = this;
     }

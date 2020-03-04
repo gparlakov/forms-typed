@@ -20,7 +20,7 @@ import { PersonContact } from '../person-contact/person-contact.model';
 export class PartyFormComponent implements OnInit {
   form = typedFormGroup<PartyForm>({
     event: typedFormControl(eventDefault()),
-    invitees: typedFormArray([])
+    invitees: typedFormArray([typedFormControl<PersonContact>()])
   });
 
   get invitees() {

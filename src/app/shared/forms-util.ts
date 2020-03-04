@@ -5,7 +5,8 @@ import {
   FormControl,
   ValidatorFn,
   AsyncValidatorFn,
-  FormArray
+  FormArray,
+  AbstractControlOptions
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -121,7 +122,8 @@ export function typedFormControl<T>(
 ): TypedFormControl<T> {
   return new FormControl(v, validators, asyncValidators);
 }
-export interface TypedFormGroup<K> extends FormGroup {
+
+export interface OldTypedFormGroup<K> extends FormGroup, TypedFormControl<K> {
   controls: {
     [key in keyof K]: K[key] extends Array<infer T>
       ? TypedFormControl<K[key]> | TypedFormGroup<K[key]> | TypedFormArray<Array<T>>
@@ -132,14 +134,16 @@ export interface TypedFormGroup<K> extends FormGroup {
   patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
   setValue: (v: K, options?: FormEventOptions) => void;
 }
-export function typedFormGroup<K>(
+export function oldTypedFormGroup<K>(
   controls: {
     [key in keyof K]: K[key] extends Array<infer T>
       ? TypedFormControl<K[key]> | TypedFormGroup<K[key]> | TypedFormArray<Array<T>>
       : TypedFormControl<K[key]> | TypedFormGroup<K[key]>
-  }
+  },
+  validatorOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
+  asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null
 ): TypedFormGroup<K> {
-  return new FormGroup(controls) as any;
+  return new FormGroup(controls, validatorOrOptions, asyncValidators) as any;
 }
 
 export interface TypedFormArray<K extends Array<T> = any[], T = any> extends FormArray {
@@ -150,13 +154,49 @@ export interface TypedFormArray<K extends Array<T> = any[], T = any> extends For
   controls: Array<TypedFormControl<T>>;
 }
 export function typedFormArray<K extends Array<T> = any[], T = any>(
-  v: Array<TypedFormControl<T>>,
-  validators?: ValidatorFn,
-  asyncValidators?: AsyncValidatorFn
+  controls: Array<TypedFormControl<T>>,
+  validatorOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
+  asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null
 ): TypedFormArray<K> {
-  return new FormArray(v, validators, asyncValidators) as any;
+  return new FormArray(controls, validatorOrOptions, asyncValidators) as any;
 }
 
+export type Controls<K> = {
+  [k in keyof K]: K[k] extends Array<any>
+    ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k]>
+    : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
+};
+
+export interface TypedFormGroup<
+  K,
+  C extends Controls<K> = Controls<K>
+> extends FormGroup, TypedFormControl<K> {
+  controls: C;
+  valueChanges: Observable<K>;
+  statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
+  patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
+  setValue: (v: K, options?: FormEventOptions) => void;
+}
+export function typedFormGroup<
+  K,
+  C extends {
+    [k in keyof K]: K[k] extends Array<any>
+      ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k]>
+      : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
+  } = {
+    [k in keyof K]: K[k] extends Array<any>
+      ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k]>
+      : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
+  }
+>(
+  controls: C,
+  validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
+  asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
+): TypedFormGroup<K, C> {
+  return new FormGroup(controls, validatorOrOpts, asyncValidator) as any;
+}
+
+// tests
 // tslint:disable-next-line:interface-over-type-literal
 export type Model = {
   name: string;
