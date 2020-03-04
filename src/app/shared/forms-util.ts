@@ -121,7 +121,6 @@ export function typedFormControl<T>(
 ): TypedFormControl<T> {
   return new FormControl(v, validators, asyncValidators);
 }
-
 export interface TypedFormGroup<K> extends FormGroup {
   controls: {
     [key in keyof K]: K[key] extends Array<infer T>
@@ -133,7 +132,6 @@ export interface TypedFormGroup<K> extends FormGroup {
   patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
   setValue: (v: K, options?: FormEventOptions) => void;
 }
-
 export function typedFormGroup<K>(
   controls: {
     [key in keyof K]: K[key] extends Array<infer T>
@@ -164,10 +162,20 @@ export type Model = {
   name: string;
   email: string;
 };
+export interface Model1 {
+  names: string[];
+  email: string;
+}
 
 const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
 f.valueChanges.subscribe(v => console.log(v));
 console.log(f.controls.email);
+
+const f2 = typedFormGroup<Model1>({
+  names: typedFormArray([]),
+  email: typedFormControl()
+});
+// f2.controls
 
 const f1 = new FormGroup({ t: new FormControl() });
 // console.log(f1.controls.any.value); // will break runtime
