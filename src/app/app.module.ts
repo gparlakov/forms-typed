@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { PersonContactComponent } from './person-contact/person-contact.component';
 import { PartyFormComponent } from './party-form/party-form.component';
 import { EventFormComponent } from './event-form/event-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
@@ -16,6 +16,7 @@ import { ShowFormControlModule } from './shared/show-form-control/show-form-cont
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent, PersonContactComponent, PartyFormComponent, EventFormComponent],
@@ -29,10 +30,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ShowFormControlModule,
+    ShowFormControlModule.for(environment.production ? 'prod' : 'dev'),
     MatIconModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

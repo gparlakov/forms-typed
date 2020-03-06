@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PersonContact } from './person-contact/person-contact.model';
 
 @Component({
   selector: 'fty-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'forms-typed';
+  person: PersonContact;
 }

@@ -1,1 +1,15 @@
 <fty-party-form></fty-party-form>
+
+<mat-divider></mat-divider>
+
+<div class="stand-alone-demo">
+  Stand alone using ngModel
+  <fty-person-contact
+    [(ngModel)]="person"
+    #controlDirective="ngModel"
+  ></fty-person-contact>
+  <fty-show-form-control
+    [control]="controlDirective.control"
+    name="person"
+  ></fty-show-form-control>
+</div>
