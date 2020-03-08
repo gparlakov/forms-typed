@@ -1,6 +1,6 @@
 import { Component, OnInit, Optional, Self } from '@angular/core';
 import { NgControl, Validators } from '@angular/forms';
-import { typedFormGroup, typedFormControl, TypedFormControl } from '../shared/forms-util';
+import { typedFormGroup, typedFormControl, TypedControlsIn } from '../shared/forms-util';
 import { EventForm, eventDefault } from './event-form.model';
 import { ControlValueAccessorConnector } from '../shared/control-value-accessor-connector';
 
@@ -14,12 +14,7 @@ const { dateStart: defaultDateStart, timeStart: defaultTimeStart } = eventDefaul
 export class EventFormComponent
   extends ControlValueAccessorConnector<
     EventForm,
-    {
-      eventName: TypedFormControl<string>;
-      location: TypedFormControl<string>;
-      dateStart: TypedFormControl<Date>;
-      timeStart: TypedFormControl<string>;
-    }
+    TypedControlsIn<EventForm>
   >
   implements OnInit {
   constructor(@Optional() @Self() directive: NgControl) {

@@ -5,7 +5,7 @@ import {
   typedFormControl,
   typedFormArray,
   TypedFormArray,
-  TypedFormGroup
+  TypedArraysIn
 } from '../shared/forms-util';
 import { PartyForm } from './party-form.model';
 import { take } from 'rxjs/operators';
@@ -18,13 +18,13 @@ import { PersonContact } from '../person-contact/person-contact.model';
   styleUrls: ['./party-form.component.css']
 })
 export class PartyFormComponent implements OnInit {
-  form = typedFormGroup<PartyForm>({
+  form = typedFormGroup<PartyForm, TypedArraysIn<PartyForm, 'invitees'>>({
     event: typedFormControl(eventDefault()),
-    invitees: typedFormArray([typedFormControl<PersonContact>()])
+    invitees: typedFormArray([typedFormControl()])
   });
 
   get invitees() {
-    return this.form.controls.invitees as TypedFormArray<PersonContact[], PersonContact>;
+    return this.form.controls.invitees;
   }
 
   submitting = false;
