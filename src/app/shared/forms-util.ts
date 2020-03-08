@@ -68,12 +68,12 @@ export function forEachControlIn(form: FormGroup | FormArray | TypedFormGroup<an
       }
       return composer;
     },
-    markAsTouchedSimultaneouslyWith(c: AbstractControl, comingFromBelow?: () => boolean) {
+    markAsTouchedSimultaneouslyWith(c: AbstractControl, touchIsChildInitiated?: () => boolean) {
       if (c != null) {
         const markAsTouchedOriginal = c.markAsTouched.bind(c);
         c.markAsTouched = () => {
           markAsTouchedOriginal();
-          if (!comingFromBelow || !comingFromBelow()) {
+          if (!touchIsChildInitiated || !touchIsChildInitiated()) {
             composer.call('markAsTouched');
           }
         };

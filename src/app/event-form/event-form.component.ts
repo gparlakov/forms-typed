@@ -37,4 +37,16 @@ export class EventFormComponent
   ngOnInit(): void {
     super.ngOnInit();
   }
+  onNameInputBlur() {
+    this.onTouch();
+  }
+  onLocationInputBlur() {
+    this.onTouch();
+  }
+  onStartDateInputBlur() {
+    this.onTouch();
+  }
+  onStartTimeInputBlur() {
+    this.onTouch();
+  }
 }

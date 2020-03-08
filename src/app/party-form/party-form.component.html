@@ -18,6 +18,7 @@
   <button mat-raised-button color="primary" type="submit">
     Submit <mat-spinner *ngIf="submitting" color="warn" diameter="15" style="display:inline-block"></mat-spinner>
   </button>
+  <button type="reset" color="warn" mat-raised-button>Reset</button>
 </form>
 
 <fty-show-form-control [control]="form" name="Party Form" [closed]="true"></fty-show-form-control>

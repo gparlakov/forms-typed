@@ -10,7 +10,6 @@ import { ControlValueAccessorConnector } from '../shared/control-value-accessor-
   styleUrls: ['./person-contact.component.css']
 })
 export class PersonContactComponent extends ControlValueAccessorConnector<PersonContact> implements OnInit {
-
   constructor(@Self() @Optional() controlDirective: NgControl) {
     super(
       controlDirective,
@@ -23,5 +22,12 @@ export class PersonContactComponent extends ControlValueAccessorConnector<Person
 
   ngOnInit(): void {
     super.ngOnInit();
+  }
+
+  onNameInputBlur() {
+    this.onTouch();
+  }
+  onEmailInputBlur() {
+    this.onTouch();
   }
 }
