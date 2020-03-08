@@ -114,6 +114,7 @@ export interface TypedFormControl<K> extends FormControl {
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
   patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
   setValue: (v: K, options?: FormEventOptions) => void;
+  value: K;
 }
 export function typedFormControl<T>(
   v?: T,
@@ -123,69 +124,50 @@ export function typedFormControl<T>(
   return new FormControl(v, validators, asyncValidators);
 }
 
-export interface OldTypedFormGroup<K> extends FormGroup, TypedFormControl<K> {
-  controls: {
-    [key in keyof K]: K[key] extends Array<infer T>
-      ? TypedFormControl<K[key]> | TypedFormGroup<K[key]> | TypedFormArray<Array<T>>
-      : TypedFormControl<K[key]> | TypedFormGroup<K[key]>
-  };
-  valueChanges: Observable<K>;
-  statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
-  patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
-  setValue: (v: K, options?: FormEventOptions) => void;
-}
-export function oldTypedFormGroup<K>(
-  controls: {
-    [key in keyof K]: K[key] extends Array<infer T>
-      ? TypedFormControl<K[key]> | TypedFormGroup<K[key]> | TypedFormArray<Array<T>>
-      : TypedFormControl<K[key]> | TypedFormGroup<K[key]>
-  },
-  validatorOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
-  asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null
-): TypedFormGroup<K> {
-  return new FormGroup(controls, validatorOrOptions, asyncValidators) as any;
-}
-
 export interface TypedFormArray<K extends Array<T> = any[], T = any> extends FormArray {
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
   patchValue: (v: K, options?: FormEventOptions) => void;
   setValue: (v: K, options?: FormEventOptions) => void;
   controls: Array<TypedFormControl<T>>;
+  push: (control: TypedFormControl<T>) => void;
+  insert: (index: number, control: TypedFormControl<T>) => void;
+  at: (index: number) => TypedFormControl<T>;
+  setControl: (index: number, control: TypedFormControl<T>) => void;
+  value: K;
 }
 export function typedFormArray<K extends Array<T> = any[], T = any>(
   controls: Array<TypedFormControl<T>>,
   validatorOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null
-): TypedFormArray<K> {
+): TypedFormArray<K, T> {
   return new FormArray(controls, validatorOrOptions, asyncValidators) as any;
 }
 
 export type Controls<K> = {
-  [k in keyof K]: K[k] extends Array<any>
-    ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k]>
+  [k in keyof K]: K[k] extends Array<infer T>
+    ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k], T>
     : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
 };
 
-export interface TypedFormGroup<
-  K,
-  C extends Controls<K> = Controls<K>
-> extends FormGroup, TypedFormControl<K> {
+export interface TypedFormGroup<K, C extends Controls<K> = Controls<K>> extends FormGroup, TypedFormControl<K> {
   controls: C;
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
   patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
   setValue: (v: K, options?: FormEventOptions) => void;
+  value: K;
+  setControl: <T extends keyof C>(name: T extends string ? T : never, control: C[T]) => void;
 }
 export function typedFormGroup<
   K,
   C extends {
-    [k in keyof K]: K[k] extends Array<any>
-      ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k]>
+    [k in keyof K]: K[k] extends Array<infer T>
+      ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k], T>
       : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
   } = {
-    [k in keyof K]: K[k] extends Array<any>
-      ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k]>
+    [k in keyof K]: K[k] extends Array<infer T>
+      ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k], T>
       : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
   }
 >(
@@ -210,13 +192,21 @@ export interface Model1 {
 const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
 f.valueChanges.subscribe(v => console.log(v));
 console.log(f.controls.email);
+f.setControl('name', typedFormControl());
+
+const f1 = new FormGroup({ t: new FormControl() });
+// console.log(f1.controls.any.value); // will break runtime
+// f1.valueChanges.subscribe(v => console.log(v));
 
 const f2 = typedFormGroup<Model1>({
   names: typedFormArray([]),
   email: typedFormControl()
 });
-// f2.controls
+console.log(f2.controls); // controls are loosely typed - one of form control or group
 
-const f1 = new FormGroup({ t: new FormControl() });
-// console.log(f1.controls.any.value); // will break runtime
-// f1.valueChanges.subscribe(v => console.log(v));
+const f3 = typedFormGroup<Model, { name: TypedFormControl<string>; email: TypedFormControl<string> }>({
+  name: typedFormControl(),
+  email: typedFormControl()
+});
+console.log(f3.controls); // controls are strongly typed - know exactly what type of control for which key in your model
+f3.setControl('email', typedFormControl());

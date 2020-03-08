@@ -24,7 +24,7 @@ export class PartyFormComponent implements OnInit {
   });
 
   get invitees() {
-    return this.form.controls.invitees as TypedFormArray<PersonContact[]>;
+    return this.form.controls.invitees as TypedFormArray<PersonContact[], PersonContact>;
   }
 
   submitting = false;
