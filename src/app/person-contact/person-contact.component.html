@@ -1,11 +1,11 @@
 <div [formGroup]="form">
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput formControlName="name"/>
+    <input matInput formControlName="name" (blur)="onNameInputBlur()"/>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput formControlName="email" required/>
+    <input matInput formControlName="email" required (blur)="onEmailInputBlur()"/>
     <mat-error>Please provide person's email</mat-error>
   </mat-form-field>
 </div>

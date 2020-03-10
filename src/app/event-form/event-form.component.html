@@ -1,22 +1,22 @@
 <div [formGroup]="form">
   <mat-form-field>
     <mat-label>Event name</mat-label>
-    <input type="text" matInput formControlName="eventName" required />
+    <input type="text" matInput formControlName="eventName" required (blur)="onNameInputBlur()" />
     <mat-error>Event name is required</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Event location</mat-label>
-    <input type="text" matInput formControlName="location" />
+    <input type="text" matInput formControlName="location" (blur)="onLocationInputBlur()" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Event start date</mat-label>
-    <input matInput formControlName="dateStart" required [matDatepicker]="dateStartPicker" />
+    <input matInput formControlName="dateStart" required [matDatepicker]="dateStartPicker" (blur)="onStartDateInputBlur()" />
     <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
     <mat-datepicker #dateStartPicker></mat-datepicker>
     <mat-error>Please provide start date</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Event start time</mat-label>
-    <input matInput type="time" formControlName="timeStart"  />
+    <input matInput type="time" formControlName="timeStart" (blur)="onStartTimeInputBlur()" />
   </mat-form-field>
 </div>

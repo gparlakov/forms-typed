@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 export class ControlValueAccessorConnector<T, C extends Controls<T> = Controls<T>>
   implements OnInit, OnDestroy, ControlValueAccessor {
   protected subs = new Subscription();
-  protected callingOnTouchFromBelow: boolean;
+  protected touchIsChildInitiated: boolean;
 
   public form: TypedFormGroup<T, C>;
 
@@ -20,16 +20,14 @@ export class ControlValueAccessorConnector<T, C extends Controls<T> = Controls<T
   ngOnInit(): void {
     if (this.directive && this.directive.control) {
       forEachControlIn(this.form)
-        .markAsTouchedSimultaneouslyWith(this.directive.control, () => this.callingOnTouchFromBelow)
+        .markAsTouchedSimultaneouslyWith(this.directive.control, () => this.touchIsChildInitiated)
         .addValidatorsTo(this.directive.control);
     }
 
     const values = this.form.valueChanges.subscribe(v => this.onChange(v));
     const statuses = this.form.statusChanges.subscribe(s => {
       if (this.form.touched) {
-        this.callingOnTouchFromBelow = true;
         this.onTouch();
-        this.callingOnTouchFromBelow = false;
       }
     });
 
@@ -40,8 +38,8 @@ export class ControlValueAccessorConnector<T, C extends Controls<T> = Controls<T
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
-  private onChange = (_: T) => {};
-  private onTouch = () => {};
+  protected onChange = (_: T) => {};
+  protected onTouch = () => {};
   writeValue(obj: any): void {
     this.form.patchValue(obj || {});
   }
@@ -49,7 +47,11 @@ export class ControlValueAccessorConnector<T, C extends Controls<T> = Controls<T
     this.onChange = fn;
   }
   registerOnTouched(fn: any): void {
-    this.onTouch = fn;
+    this.onTouch = () => {
+      this.touchIsChildInitiated = true;
+      fn();
+      this.touchIsChildInitiated = false;
+    };
   }
   setDisabledState(disable: boolean) {
     disable ? this.form.disable() : this.form.enable();
