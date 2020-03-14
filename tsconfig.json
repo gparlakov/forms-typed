@@ -23,7 +23,13 @@
       "es2018",
       "dom"
     ],
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "forms": [
+        "dist/forms/forms",
+        "dist/forms"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

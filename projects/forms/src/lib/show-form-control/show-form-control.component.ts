@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, HostListener, ElementRef, Optional, Inject } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef, Optional, Inject, Renderer2 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { componentSelector, WindowWidthProvider } from './show-form-control';
+import { componentSelector, WindowWidthProvider, WindowAnimationFrameProvider } from './show-form-control';
 
 let count = 0;
 
@@ -27,8 +27,9 @@ export class ShowFormControlComponent implements OnInit {
   name = 'Drag here';
   initial: DOMRect | null = null;
 
-  constructor(private host: ElementRef,
-    @Optional() @Inject('AnimationFrameProvider') private animationFrame: AnimationFrameProvider,
+  constructor(
+    private host: ElementRef,
+    @Optional() @Inject('AnimationFrameProvider') private animationFrame: WindowAnimationFrameProvider,
     @Optional() @Inject('WINDOW') private w: WindowWidthProvider
   ) {
     this.animationFrame = this.animationFrame || window;
@@ -41,11 +42,11 @@ export class ShowFormControlComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.calcWidthAfterRedraw(Boolean(this.closed));
+    this.calcWidthAfterRedraw();
     this.addOffsetAfterRedraw();
   }
 
-  private calcWidthAfterRedraw(triggeredOn: boolean) {
+  private calcWidthAfterRedraw() {
     this.animationFrame.requestAnimationFrame(() => {
       const rect = (this.host.nativeElement as HTMLElement).getBoundingClientRect();
       this.width = rect.width;
@@ -83,7 +84,7 @@ export class ShowFormControlComponent implements OnInit {
 
   onToggle() {
     this.closed = !this.closed;
-    this.calcWidthAfterRedraw(!this.closed);
+    this.calcWidthAfterRedraw();
   }
 
   onDragStart(drag: MouseEvent | DragEvent) {
