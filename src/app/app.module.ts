@@ -12,7 +12,7 @@ import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ShowFormControlModule } from './shared/show-form-control/show-form-control.module';
+import { ShowFormControlModule } from 'forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -39,4 +39,4 @@ import { environment } from 'src/environments/environment';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

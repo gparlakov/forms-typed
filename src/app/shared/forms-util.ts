@@ -307,7 +307,7 @@ f3.setControl('email', typedFormControl());
 
 const f4 = typedFormGroup<Model1, TypedControlsIn<Model1, never, 'names'>>({
   names: typedFormArray([]),
-  email: typedFormGroup<string>('test')
+  email: typedFormControl<string>('test')
 });
 f4.reset({ names: { value: [''], disabled: true }, email: '' });
 f4.reset({ names: [''] }, { emitEvent: true });

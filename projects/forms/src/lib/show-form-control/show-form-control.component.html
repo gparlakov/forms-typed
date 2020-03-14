@@ -1,0 +1,24 @@
+<ng-container *ngIf="enabled">
+  <div class="drag-button" (mousedown)="onDragStart($event)">
+    {{ name }}
+  </div>
+  <div class="buttons">
+    <button (click)="onToggle()">{{ closed ? '\u2752' : '\u2581' }}</button>
+  </div>
+  <span [class.hidden]="closed">
+    <span *ngIf="control?.touched" style="color: blue">touched</span>
+    <span *ngIf="control?.untouched" style="color: rgb(21, 88, 21">untouched</span>
+    &nbsp;
+    <span *ngIf="control?.dirty" style="color: magenta">dirty</span>
+    <span *ngIf="control?.pristine" style="color: black">pristine</span>
+    &nbsp;
+    <span *ngIf="control?.valid" style="color: green">valid</span>
+    <span *ngIf="control?.invalid" style="color: red">invalid</span>
+    <span *ngIf="control?.pending" style="color: blue">pending</span>
+    <span *ngIf="control?.disabled" style="color: gray">disabled</span>
+  </span>
+
+  <br [class.hidden]="closed" />
+  <textarea style="color: green" [class.hidden]="closed" [value]="control?.value | json" rows="20" cols="50"
+    (input)="onTextAreaInput($event)"></textarea>
+</ng-container>
