@@ -126,7 +126,7 @@
       "projectType": "library",
       "root": "projects/forms",
       "sourceRoot": "projects/forms/src",
-      "prefix": "lib",
+      "prefix": "typ",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

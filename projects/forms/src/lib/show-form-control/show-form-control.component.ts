@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, HostListener, ElementRef, Optional, Inject, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef, Optional, Inject, HostBinding } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { componentSelector, WindowWidthProvider, WindowAnimationFrameProvider } from './show-form-control';
+import { componentSelector, WindowWidthProvider, WindowAnimationFrameProvider, Disable } from './show-form-control';
 
 let count = 0;
 
 @Component({
-  selector: componentSelector,
+  // tslint:disable-next-line:component-selector
+  selector: 'show-form-control',
   templateUrl: './show-form-control.component.html',
-  styleUrls: ['./show-form-control.component.scss']
+  styleUrls: ['./show-form-control.component.scss'],
 })
 export class ShowFormControlComponent implements OnInit {
   private from: { x: number, y: number } | null = null;
@@ -15,6 +16,9 @@ export class ShowFormControlComponent implements OnInit {
   dragging?: boolean;
   width = 50;
   height?: number;
+
+  @HostBinding('class.enabled')
+  enabled: boolean;
 
   @Input()
   closed?: boolean;
@@ -29,21 +33,28 @@ export class ShowFormControlComponent implements OnInit {
 
   constructor(
     private host: ElementRef,
+    @Inject(Disable) disabled: boolean,
     @Optional() @Inject('AnimationFrameProvider') private animationFrame: WindowAnimationFrameProvider,
     @Optional() @Inject('WINDOW') private w: WindowWidthProvider
   ) {
+    this.enabled = !Boolean(disabled);
     this.animationFrame = this.animationFrame || window;
     this.w = this.w || window;
-    this.offset = count;
-    if (count > 0) {
-      this.closed = true;
+
+    if (this.enabled) {
+      this.offset = count;
+      if (count > 0) {
+        this.closed = true;
+      }
+      count += 1;
     }
-    count += 1;
   }
 
   ngOnInit() {
-    this.calcWidthAfterRedraw();
-    this.addOffsetAfterRedraw();
+    if (this.enabled) {
+      this.calcWidthAfterRedraw();
+      this.addOffsetAfterRedraw();
+    }
   }
 
   private calcWidthAfterRedraw() {
@@ -96,13 +107,15 @@ export class ShowFormControlComponent implements OnInit {
 
   @HostListener('mouseup')
   onDragEnd() {
-    this.dragging = false;
-    this.from = null;
+    if (this.enabled) {
+      this.dragging = false;
+      this.from = null;
+    }
   }
 
   @HostListener('window:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    if (this.from != null && this.initial != null) {
+    if (this.enabled && this.from != null && this.initial != null) {
       const y = this.from.y - event.clientY;
       const x = this.from.x - event.clientX;
 
@@ -124,19 +137,4 @@ export class ShowFormControlComponent implements OnInit {
       }
     }
   }
-}
-
-@Component({
-  selector: componentSelector,
-  template: ''
-})
-export class ProdVersionComponent {
-  @Input()
-  closed?: boolean;
-
-  @Input()
-  control?: AbstractControl;
-
-  @Input()
-  name = 'Drag here';
 }
