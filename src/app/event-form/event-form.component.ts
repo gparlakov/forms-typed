@@ -2,7 +2,7 @@ import { Component, OnInit, Optional, Self } from '@angular/core';
 import { NgControl, Validators } from '@angular/forms';
 import { typedFormGroup, typedFormControl, TypedControlsIn } from 'forms';
 import { EventForm, eventDefault } from './event-form.model';
-import { ControlValueAccessorConnector } from '../shared/control-value-accessor-connector';
+import { ControlValueAccessorConnector } from 'forms';
 
 const { dateStart: defaultDateStart, timeStart: defaultTimeStart } = eventDefault();
 
