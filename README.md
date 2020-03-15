@@ -16,7 +16,7 @@ Example shows adding the strong type to an existing form control and its value i
 ![Manually typed example - missing image](./assets/manually-typed.jpg) 
 The controls property is now **strong typed**!
 
-Note: The parameters for the `FormControl` are **not strong typed**. Notice we are passing the `t` as a FormControl and then are trying to access `email`. Hence the `typedFormGroup` function. See [below](#Using_the_helper_functions_to_strong_type_forms)
+Note: The parameters for the `FormControl` are **not strong typed**. Notice we are passing the `t` as a FormControl and then are trying to access `email`. Hence the `typedFormGroup` function. See [below](#Using-the-helper-functions-to-strong-type-forms)
 
 ## Using the helper functions to strong type forms
 ![auto typed example - parmeter error - missing image](./assets/typed-form-control-error.png)
@@ -47,9 +47,9 @@ Multiple methods as params supported:
 ![For each control in - missing image](./assets/for-each-parent-child-interact.png)
 
 Here we want the validation of the child `Address` form to influence the parent `Person` form. That's the `addValidatorsTo()` method's job. We also want to make the child form touched if we call the parent form `touch()` method. That's the `markAsTouchedSimultaneouslyWith()` method's job. For more details and how they interact see example implementation:
- - [parent component](src\app\party-form\party-form.component.ts) 
- - [child form](src\app\person-contact\person-contact.component.ts) 
- - [control calue accessor connector](src\app\shared\control-value-accessor-connector.ts)
+ - [parent component](src/app/party-form/party-form.component.ts) 
+ - [child form](src/app/person-contact/person-contact.component.ts) 
+ - [control calue accessor connector](src/app/shared/control-value-accessor-connector.ts)
 
 
 ## CLI 
@@ -57,7 +57,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Library build 
 
-Run `ng build forms` or `ng build forms --prod` to build the library and run the [development server](#Development_server) to start the example project
+Run `ng build forms` or `ng build forms --prod` to build the library and run the [development server](#Development-server) to start the example project
 
 ## Development server
 
