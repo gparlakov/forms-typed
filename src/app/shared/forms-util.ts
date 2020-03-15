@@ -223,17 +223,19 @@ export function typedFormArray<K extends Array<T> = any[], T = any>(
 export type Controls<K> =
   | TypedControlsIn<K>
   | {
-      [k in keyof K]: K[k] extends Array<infer T>
-        ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k], T>
-        : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
-    };
+    [k in keyof K]: K[k] extends Array<infer T>
+    ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k], T>
+    : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
+  };
 
+
+type NonGroup = string | number | boolean | Function | null | undefined | never;
 /**
  * This is a strongly typed thin wrapper type around `FormGroup`.
  * Can be created using the `typedFormGroup` function
  */
 export interface TypedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>> extends FormGroup, TypedFormControl<K> {
-  controls: C;
+  controls: K extends NonGroup ? never : C;
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
   patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
@@ -243,7 +245,7 @@ export interface TypedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>> e
   reset: (value?: ResetValue<K>, options?: FormEventOptions) => void;
 }
 export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>>(
-  controls: C,
+  controls: K extends NonGroup ? never : C,
   validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
 ): TypedFormGroup<K, C> {
@@ -255,12 +257,12 @@ export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>>(
  */
 export type TypedControlsIn<K, groups extends keyof K = never, arrays extends keyof K = never> = {
   [key in keyof K]: key extends groups
-    ? TypedFormGroup<K[key]>
-    : key extends arrays
-    ? K[key] extends Array<infer T>
-      ? TypedFormArray<T[], T>
-      : never
-    : TypedFormControl<K[key]>
+  ? TypedFormGroup<K[key]>
+  : key extends arrays
+  ? K[key] extends Array<infer T>
+  ? TypedFormArray<T[], T>
+  : never
+  : TypedFormControl<K[key]>
 };
 
 /**
@@ -271,43 +273,3 @@ export type TypedArraysIn<K, arrays extends keyof K> = TypedControlsIn<K, never,
  * Shorthand for a model with `TypedFormControl`s and `TypedFormGroup`s only  (i.e. no `TypedFormArray`s in)
  */
 export type TypedGroupsIn<K, groups extends keyof K> = TypedControlsIn<K, groups, never>;
-
-// tests
-// tslint:disable-next-line:interface-over-type-literal
-export type Model = {
-  name: string;
-  email: string;
-};
-export interface Model1 {
-  names: string[];
-  email: string;
-}
-
-const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
-f.valueChanges.subscribe(v => console.log(v));
-console.log(f.controls.email);
-f.setControl('name', typedFormControl());
-
-const f1 = new FormGroup({ t: new FormControl() });
-// console.log(f1.controls.any.value); // will break runtime
-// f1.valueChanges.subscribe(v => console.log(v));
-
-const f2 = typedFormGroup<Model1, TypedControlsIn<Model1, never, 'names'>>({
-  names: typedFormArray([]),
-  email: typedFormControl()
-});
-console.log(f2.controls); // controls are loosely typed - one of form control or group
-
-const f3 = typedFormGroup<Model, { name: TypedFormControl<string>; email: TypedFormControl<string> }>({
-  name: typedFormControl(),
-  email: typedFormControl()
-});
-console.log(f3.controls); // controls are strongly typed - know exactly what type of control for which key in your model
-f3.setControl('email', typedFormControl());
-
-const f4 = typedFormGroup<Model1, TypedControlsIn<Model1, never, 'names'>>({
-  names: typedFormArray([]),
-  email: typedFormControl<string>('test')
-});
-f4.reset({ names: { value: [''], disabled: true }, email: '' });
-f4.reset({ names: [''] }, { emitEvent: true });
