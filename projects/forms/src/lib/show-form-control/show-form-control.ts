@@ -10,4 +10,5 @@ export interface WindowAnimationFrameProvider {
   requestAnimationFrame(cb: any): any;
 }
 
-export const Disable = new InjectionToken<boolean>('Are the form control visualizations disabled? On Prod for example -they should be.');
+export const Disable = 'Disable-show-form-control-injection-token';
+// 'Are the form control visualizations disabled? On Prod for example -they should be.');

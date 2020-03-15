@@ -1,9 +1,9 @@
 {
-  "name": "forms",
-  "version": "0.0.1",
+  "name": "ngx-forms-typed",
+  "version": "1.0.0",
   "peerDependencies": {
-    "@angular/common": "^9.0.2",
-    "@angular/core": "^9.0.2",
-    "tslib": "^1.10.0"
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0",
+    "typescript": "^2.8.0"
   }
 }
