@@ -1,5 +1,5 @@
 import { Component, OnInit, Self, Optional } from '@angular/core';
-import { typedFormGroup, typedFormControl } from '../shared/forms-util';
+import { typedFormGroup, typedFormControl } from 'forms';
 import { PersonContact } from './person-contact.model';
 import { NgControl, ControlValueAccessor } from '@angular/forms';
 import { ControlValueAccessorConnector } from '../shared/control-value-accessor-connector';

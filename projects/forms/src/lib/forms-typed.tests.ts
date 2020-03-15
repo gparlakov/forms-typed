@@ -2,8 +2,8 @@
 // tests
 
 import { FormControl, FormGroup } from '@angular/forms';
-import { TypedControlsIn, typedFormArray, typedFormControl, TypedFormControl, typedFormGroup, TypedFormGroup, forEachControlIn } from "./forms-util";
-import { Address } from 'cluster';
+import { TypedControlsIn, typedFormArray, typedFormControl, TypedFormControl, typedFormGroup, TypedFormGroup } from './forms-typed';
+import { forEachControlIn } from './forms-util';
 
 
 export interface Model {
@@ -12,21 +12,10 @@ export interface Model {
 }
 
 
-const form1 = typedFormGroup({ email: new FormControl(), name: new FormControl() }) as TypedFormGroup<Model>;
-console.log(form1.controls.email);
-form1.valueChanges.subscribe(v => console.log(v));
-form1.statusChanges.subscribe(s => console.log(s));
-
-
-
-
-
-
-
-
-
-
-
+const form = typedFormGroup({ email: new FormControl(), name: new FormControl() }) as TypedFormGroup<Model>;
+console.log(form.controls.email);
+form.valueChanges.subscribe(v => console.log(v));
+form.statusChanges.subscribe(s => console.log(s));
 
 
 export interface Model1 {
@@ -40,8 +29,8 @@ console.log(f.controls.email);
 f.setControl('name', typedFormControl());
 
 const f1 = new FormGroup({ t: new FormControl() });
-console.log(form1.controls.any.value); // will break runtime
-form1.valueChanges.subscribe(v => console.log(v)); // v is not strongly typed
+console.log(f1.controls.any.value); // will break runtime
+f1.valueChanges.subscribe(v => console.log(v)); // v is not strongly typed
 
 
 const f2 = typedFormGroup<Model1, TypedControlsIn<Model1, never, 'names'>>({
@@ -82,10 +71,3 @@ const address = typedFormGroup<Address>({ postCode: typedFormControl(), line: ty
 forEachControlIn(address)
   .addValidatorsTo(person)
   .markAsTouchedSimultaneouslyWith(person);
-
-
-
-
-
-
-
