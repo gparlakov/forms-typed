@@ -8,6 +8,8 @@ import { Disable } from './lib/show-form-control/show-form-control';
 
 export * from './lib/show-form-control/show-form-control';
 export * from './lib/show-form-control/show-form-control.component';
+export * from './lib/forms-typed';
+export * from './lib/forms-util';
 
 @NgModule({
     imports: [CommonModule],
