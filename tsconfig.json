@@ -28,6 +28,10 @@
       "forms": [
         "dist/forms/forms",
         "dist/forms"
+      ],
+      "show-form-control": [
+        "dist/show-form-control/show-form-control",
+        "dist/show-form-control"
       ]
     }
   },
