@@ -1,8 +1,26 @@
 # ShowFormControl
 
 This is a component that visualizes an `AbstractControl` instance - `FormControl`, `FormGroup`, `FormArray`. 
-Visualization looks like this 
+Visualization looks like this
+![SFC overview - image missing](./assets/sfc-overview.png)
+1. **Named** and **draggable** window! 
+2. **Status** - dirty/pristine, touched/untouched, valid/invalid/pending/disabled
+3. **Value** `JSON.stringify`-ed. **Editable** - edited value appears in form!
+4. **Minify** and **Maximize**
+And MORE...
+* **Resizable** (see bottom right corner)
+* **Multiple instances** supported
+* **Only** included in **dev builds**! You can use it rest assured - it will **not** end up **showing** in **production**! Just import it in you app.module (or feature module):
+    ```ts 
+        ShowFormControlModule.for(environment.production? 'prod' : 'dev')
+    ```
 
+## See it in Action
+SFC video overview - missing file](./assets/sfc-video-overview.gif)
+<video width="100%"  controls autoplay>
+  <source src="./assets/sfc-video-overview.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2.
 
 ## Code scaffolding
