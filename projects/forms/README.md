@@ -7,6 +7,15 @@ This project aims at providing several tools for Angular Forms development, incl
      - attaches their validators to a paren form (group) 
      - attaches the touched/untouched behavior to a paren form (group)
  - a helper component that shows the form/group/control and allows for editing of the value emitted 
+ 
+## Getting started
+
+1. `npm install --save-dev ngx-forms-typed` 
+2. Create a model for your form (see [example](/src/app/person-contact/person-contact.model.ts))
+3. Inherit `ControlValueAccessorConnector` (see [example](/src/app/person-contact/person-contact.component.ts))
+4. Enjoy your type safety!
+ 
+## Features
 
 ## Manually applying strong types to existing forms 
 ![Manually typed example - value - missing image](./assets/manually-typed-value.png)
@@ -50,3 +59,10 @@ Here we want the validation of the child `Address` form to influence the parent 
  - [parent component](src/app/party-form/party-form.component.ts) 
  - [child form](src/app/person-contact/person-contact.component.ts) 
  - [control calue accessor connector](src/app/shared/control-value-accessor-connector.ts)
+
+## Limitations
+- It requires injecting NgControl. Like [so](https://github.com/gparlakov/forms-typed/blob/21e99c91877746b506dd64ad0e5a127eeed15bac/src/app/person-contact/person-contact.component.ts#L13)
+- It requires calling super.ngOnInit from the child ngOnInit. Like [so](https://github.com/gparlakov/forms-typed/blob/21e99c91877746b506dd64ad0e5a127eeed15bac/src/app/person-contact/person-contact.component.ts#L24)
+- At present .get('name') is not strongly typed - could be if users want it
+- All properties of a model need to have corresponding controls in a FormGroup modeled with a type. That means that Typescript will yell at you if you don't give it a FormControl for each and every property in the model. It's a restriction that's there by design, although I can see how it would sadden someone reusing the model for other things and can break their forms.
+- FormGroup inherited limitation: value on an enabled FormGroup would include only enabled fields in that FormGroup - which is what you may or may not want. See [source](https://github.com/angular/angular/blob/master/packages/forms/src/model.ts#L1570-L1579).
