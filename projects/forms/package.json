@@ -1,6 +1,6 @@
 {
   "name": "ngx-forms-typed",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "repository": "https://github.com/gparlakov/forms-typed",
   "maintainers": [
     "gparlakov@gmail.com"
@@ -12,6 +12,7 @@
   "author": {
     "name": "Georgi Parlakov"
   },
+  "homepage": "https://github.com/gparlakov/forms-typed/tree/master/projects/forms#README",
   "description": "Angular Forms Typed provides types and helper functions fully compatible with original Angular forms",
   "peerDependencies": {
     "@angular/core": "^2.0.0",

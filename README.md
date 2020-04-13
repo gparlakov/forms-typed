@@ -1,10 +1,14 @@
 # FormsTyped
+This is a shared repo for 2 packages ngx-forms-typed and ngx-show-form-control.
+
 See [ngx-forms-typed Readme.md here](./projects/forms/readme.md)
 
-## CLI 
+See [ngx-show-form-control Readme.md here](./projects/show-form-control/readme.md)
+
+## CLI
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
 
-## Library build 
+## Library build
 
 Run `ng build forms` or `ng build forms --prod` to build the library and run the [development server](#Development-server) to start the example project
 
