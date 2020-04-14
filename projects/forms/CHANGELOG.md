@@ -1,16 +1,42 @@
-# 1.0.4
-## Fixed
-- fixed link to homepage in npmjs.com package page
+# Changelog
 
-# 1.0.3
-Use the github repository provided images (rollback 1.0.2 and 1.0.1)
-# 1.0.2
-Include images for readme.md
-# 1.0.1
-Fix Readme.md image links
-# 1.0.0
-Initial release
-# 1.0.0-rc.4
-Add documentation README.md and CHANGELOG.md
-# 1.0.0-rc.3
-Include TypedFormControl, ControlValueAccessorConnector and forEachControlIn
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Fixed
+-   fixed link to homepage in npmjs.com package page
+
+## [1.0.3] - 2020-04-04
+### Added
+-   Use the github repository provided images (rollback 1.0.2 and 1.0.1)
+
+## [1.0.2] - 2020-03-14
+### Added
+-   Include images for readme.md
+
+## [1.0.1] - 2020-03-14
+### Fixed
+-   Fix Readme.md image links
+
+## [1.0.0] - 2020-03-14
+### Added
+-   Initial stable release - includes TypedFormControl, ControlValueAccessorConnector and forEachControlIn
+
+## [1.0.0-rc.4] - 2020-03-14
+### Added
+-   Add documentation README.md and CHANGELOG.md
+
+## [1.0.0-rc.3] - 2020-03-14
+### Fixed
+-   Small fixes
+
+## [1.0.0-rc.2] - 2020-03-14
+### Added
+-   Small fixes
+
+## [1.0.0-rc.1] - 2020-03-14
+### Added
+-   Initial release - includes TypedFormControl, ControlValueAccessorConnector and forEachControlIn
