@@ -66,3 +66,9 @@ Here we want the validation of the child `Address` form to influence the parent 
 - At present .get('name') is not strongly typed - could be if users want it
 - All properties of a model need to have corresponding controls in a FormGroup modeled with a type. That means that Typescript will yell at you if you don't give it a FormControl for each and every property in the model. It's a restriction that's there by design, although I can see how it would sadden someone reusing the model for other things and can break their forms.
 - FormGroup inherited limitation: value on an enabled FormGroup would include only enabled fields in that FormGroup - which is what you may or may not want. See [source](https://github.com/angular/angular/blob/master/packages/forms/src/model.ts#L1570-L1579).
+
+## ngx-forms-typed for enterprise
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of ngx-forms-typed and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/npm-ngx-forms-typed?utm_source=npm-ngx-forms-typed&utm_medium=referral&utm_campaign=readme)

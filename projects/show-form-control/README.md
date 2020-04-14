@@ -19,6 +19,12 @@ And MORE...
 ![SFC video overview - missing file](./assets/sfc-video-overview.gif)
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2.
 
+## ngx-show-form-control for enterprise
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of ngx-show-form-control and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/npm-ngx-show-form-control?utm_source=npm-ngx-show-form-control&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
+
 ## Code scaffolding
 
 Run `ng generate component component-name --project show-form-control` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project show-form-control`.
@@ -27,10 +33,6 @@ Run `ng generate component component-name --project show-form-control` to genera
 ## Build
 
 Run `ng build show-form-control` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build show-form-control`, go to the dist folder `cd dist/show-form-control` and run `npm publish`.
 
 ## Running unit tests
 
