@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.5] - 2020-08-14
+### Fixed
+-   To support Ivy bump up the package peer dependencies to allow for any version of Angular after and including 2.0.0
+-   fixed a couple of typos
+
+## [1.0.4] - 2020-05-05
 ### Fixed
 -   fixed link to homepage in npmjs.com package page
 
