@@ -1,6 +1,6 @@
 {
   "name": "ngx-show-form-control",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": "https://github.com/gparlakov/forms-typed",
   "maintainers": [
     "gparlakov@gmail.com"
@@ -14,7 +14,8 @@
   },
   "homepage": "https://github.com/gparlakov/forms-typed/tree/master/projects/show-form-control#README",
   "peerDependencies": {
-    "@angular/common": "^2.0.0",
-    "@angular/core": "^2.0.0"
-  }
+    "@angular/common": ">=2.0.0",
+    "@angular/core": ">=2.0.0"
+  },
+  "keywords": ["angular", "forms", "form", "helper", "show form control", "form control", "control", "dev tool", "tool", "dev"]
 }
