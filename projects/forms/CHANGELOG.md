@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.6] - 2020-09-05
+### Fixed
+-   Actually published the --prod build version of the library (issue #31)
+
 ## [1.0.5] - 2020-08-14
 ### Fixed
 -   To support Ivy bump up the package peer dependencies to allow for any version of Angular after and including 2.0.0

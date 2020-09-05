@@ -5,6 +5,9 @@
   "maintainers": [
     "gparlakov@gmail.com"
   ],
+  "scripts": {
+    "forms": "ng build forms --prod"
+  },
   "bugs": {
     "url": "https://github.com/gparlakov/forms-typed",
     "email": "gparlakov@gmail.com"
