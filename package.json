@@ -61,5 +61,19 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "release": {
+    "branches": [
+      "master-forms-typed",
+      {
+        "name": "rc-forms-typed",
+        "channel": "rc"
+      },
+      "master-show-form-control",
+      {
+        "name": "rc-show-form-control",
+        "channel": "rc"
+      }
+    ]
   }
 }
