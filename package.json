@@ -64,16 +64,26 @@
   },
   "release": {
     "branches": [
-      "master-forms-typed",
+      "master",
+      {
+        "name": "master-forms-typed",
+        "channel": "latest"
+      },
       {
         "name": "rc-forms-typed",
-        "channel": "rc"
-      },
-      "master-show-form-control",
-      {
-        "name": "rc-show-form-control",
-        "channel": "rc"
+        "channel": "rc",
+        "prerelease": "rc"
       }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist/forms"
+        }
+      ]
     ]
   }
 }
