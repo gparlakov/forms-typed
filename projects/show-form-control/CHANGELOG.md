@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+-   semantic-release for releasing automatically
+-   commitlint to make sure the commits follow the standard
+-   husky to run commitlint
+
 ## [1.0.3] - 2020-09-05
 ### Fixed
 -   Actually published the --prod build version of the library (issue #31)
