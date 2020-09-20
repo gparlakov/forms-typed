@@ -66,11 +66,7 @@
     "branches": [
       "master",
       {
-        "name": "master-forms-typed",
-        "channel": "latest"
-      },
-      {
-        "name": "rc-forms-typed",
+        "name": "rc",
         "channel": "rc",
         "prerelease": "rc"
       }
