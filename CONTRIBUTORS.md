@@ -10,7 +10,7 @@ And there's also an example app that lives in /src folder.
 
 ## Setup
 We are using a couple of libraries to setup our process of contributing:
-- [husky](https://www.npmjs.com/package/husky) - will run a pre commit step to verify that the commit message adheres to [Angular standard commit](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format)
+- [husky](https://www.npmjs.com/package/husky) - will run a pre-commit step to verify that the commit message adheres to [Angular standard commit](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format)
 - [semantic-release](https://semantic-release.gitbook.io/semantic-release/) takes care of release based on the commits - check out [their great docs](https://github.com/semantic-release/semantic-release#commit-message-format) but in short
    - `fix` will create new patch version 1.0.**5** -> 1.0.**6**
    - `feat` will create new minor version 1.**0**.6 -> 1.**1**.0
@@ -29,3 +29,9 @@ We are using a couple of libraries to setup our process of contributing:
 ## Recipies
 Look into the following to make sense on the release process
  - semantic release - [publish recipe](https://github.com/semantic-release/semantic-release/blob/1405b94296059c0c6878fb8b626e2c5da9317632/docs/recipes/distribution-channels.md)
+
+## Error example
+
+!['./assets/commit-error.png'](./assets/commit-error.png)
+
+This is what an error looks like in the console and in the VS Code (on Windows). A acceptable message would be `chore:fix typo`
