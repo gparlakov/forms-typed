@@ -61,5 +61,25 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "release": {
+    "branches": [
+      "master",
+      {
+        "name": "rc",
+        "channel": "rc",
+        "prerelease": "rc"
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist/forms"
+        }
+      ]
+    ]
   }
 }
