@@ -2,7 +2,7 @@ name: Release forms typed
 on:
   push:
     branches:
-      - rc-forms-typed
+      - rc
 jobs:
   release:
     name: Release
