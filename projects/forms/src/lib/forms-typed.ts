@@ -47,7 +47,7 @@ export interface TypedFormControl<K> extends FormControl, AbstractControl {
  * c.patchValue(1) //  COMPILE TIME! type error!
  */
 export function typedFormControl<T>(
-  v?: T,
+  v?: T | {value: T; disabled: boolean},
   validators?: ValidatorFn,
   asyncValidators?: AsyncValidatorFn
 ): TypedFormControl<T> {
