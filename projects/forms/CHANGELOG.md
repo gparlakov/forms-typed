@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.8] - 2020-12-12
+### Fixed
+-   allow `AbstractControlOptions` in the `typedFormControl` helper function
+
+
 ## [1.0.7] - 2020-09-20
 ### Fixed
 -   allow alternative formsControl with value and disabled state object (thanks to @zy2ba)

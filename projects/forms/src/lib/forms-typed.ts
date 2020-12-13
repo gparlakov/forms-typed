@@ -48,10 +48,10 @@ export interface TypedFormControl<K> extends FormControl, AbstractControl {
  */
 export function typedFormControl<T>(
   v?: T | {value: T; disabled: boolean},
-  validators?: ValidatorFn,
+  validatorsOrOptions?: ValidatorFn | AbstractControlOptions,
   asyncValidators?: AsyncValidatorFn
 ): TypedFormControl<T> {
-  return new FormControl(v, validators, asyncValidators);
+  return new FormControl(v, validatorsOrOptions, asyncValidators);
 }
 
 /**

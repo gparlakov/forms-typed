@@ -20,8 +20,8 @@ We are using a couple of libraries to setup our process of contributing:
 
 ## Crafting a PR
  All of the above means that when preparing your PR you'll have to:
-  - adhere to the commit standard (and we've a pre-commit step that will fail your commit if you don't)
-  - add a line to the project's Changelog.md (this is not automated)
+  - adhere to the commit standard (and we have a pre-commit step that will fail your commit if you don't)
+  - add a line to the project's `Changelog.md` (this is not automated)
   - add a test or two for your change
     - `ngx-forms-typed` - /projects/forms/src/lib/forms-typed.tests.ts
     - `ngx-show-form-control` - /projects/show-form-control/src/lib/show-form-control/show-form-control.component.spec.ts
@@ -34,4 +34,4 @@ Look into the following to make sense on the release process
 
 !['./assets/commit-error.png'](./assets/commit-error.png)
 
-This is what an error looks like in the console and in the VS Code (on Windows). A acceptable message would be `chore:fix typo`
+This is what an error looks like in the console and in the VS Code (on Windows). An acceptable message would be `chore:fix typo`
