@@ -1,6 +1,6 @@
 {
   "name": "ngx-forms-typed",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "repository": "https://github.com/gparlakov/forms-typed",
   "maintainers": [
     "gparlakov@gmail.com"
@@ -22,5 +22,16 @@
     "@angular/forms": ">=2.0.0",
     "typescript": ">=2.8.0"
   },
-  "keywords": ["angular", "forms", "form", "reactive-forms", "reactive forms", "angular 2", "typed form", "form typed", "typed forms", "forms typed"]
+  "keywords": [
+    "angular",
+    "forms",
+    "form",
+    "reactive-forms",
+    "reactive forms",
+    "angular 2",
+    "typed form",
+    "form typed",
+    "typed forms",
+    "forms typed"
+  ]
 }

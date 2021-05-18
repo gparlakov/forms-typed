@@ -1,4 +1,4 @@
-name: Release forms typed
+name: Release show form control
 on:
   push:
     branches:
