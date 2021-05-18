@@ -5,10 +5,14 @@ import { Observable } from 'rxjs';
  * Type encapsulating the Angular Form options:
  * `emitEvent` - do we emit event;
  * `onlySelf` - do we bubble up to parent
+ * `emitModelToViewChange` - When true or not supplied (the default), each change triggers an onChange event to update the view.
+ * `emitViewToModelChange` - When true or not supplied (the default), each change triggers an ngModelChange event to update the model.
  */
 export interface FormEventOptions {
   emitEvent?: boolean;
   onlySelf?: boolean;
+  emitModelToViewChange?: boolean;
+  emitViewToModelChange?: boolean;
 }
 
 /**
