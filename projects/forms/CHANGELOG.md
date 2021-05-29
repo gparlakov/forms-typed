@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.9] - 2021-05-18
+## [1.1.0] - 2021-05-29
 ### Added
 -   allow `emitModelToViewChange?: boolean;` and `emitViewToModelChange?: boolean;` in the method options (e.g. `setValue`)
+-   add `keys` to the `typedFormControl` return type to hold all keys of the form group
 ### Fixed
 -   typedFormArray takes the item type first vs the array type first i.e. `typedFormArray<string>` vs `typedFormArray<string[], string>`
 
