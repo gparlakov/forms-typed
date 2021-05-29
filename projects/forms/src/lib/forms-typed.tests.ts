@@ -127,4 +127,11 @@ tags.push(typedFormControl(1));
 // patch value works with ❌ exception of 1 - not a string
 tags.patchValue(['1', '2', '3', 1]);
 
+// typed Form group Keys
+const tg = typedFormGroup<Model>({
+  name: typedFormControl(),
+  email: typedFormControl()
+})
+
+tg.keys.email
 

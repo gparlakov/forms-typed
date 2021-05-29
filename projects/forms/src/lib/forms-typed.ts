@@ -108,6 +108,7 @@ export type Controls<K> =
   };
 
 
+// tslint:disable-next-line:ban-types
 type NonGroup = string | number | boolean | Function | null | undefined | never;
 /**
  * This is a strongly typed thin wrapper type around `FormGroup`.
@@ -123,12 +124,14 @@ export interface TypedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>> e
   setControl: <T extends keyof C>(name: T extends string ? T : never, control: C[T]) => void;
   reset: (value?: ResetValue<K>, options?: FormEventOptions) => void;
 }
-export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>>(
+export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>, Key extends keyof K = keyof K>(
   controls: K extends NonGroup ? never : C,
   validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
-): TypedFormGroup<K, C> {
-  return new FormGroup(controls, validatorOrOpts, asyncValidator) as any;
+): TypedFormGroup<K, C> & { keys: Record<Key, string> } {
+  const f = new FormGroup(controls, validatorOrOpts, asyncValidator) as any;
+  f.keys = Object.keys(controls).map((k) => ({ [k]: k }));
+  return f;
 }
 
 /**
