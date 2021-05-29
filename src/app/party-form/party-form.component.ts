@@ -5,7 +5,7 @@ import {
   typedFormControl,
   typedFormArray,
   TypedFormArray,
-  TypedArraysIn
+  TypedArraysIn,
 } from 'forms';
 import { PartyForm } from './party-form.model';
 import { take } from 'rxjs/operators';
@@ -15,15 +15,16 @@ import { PersonContact } from '../person-contact/person-contact.model';
 @Component({
   selector: 'fty-party-form',
   templateUrl: './party-form.component.html',
-  styleUrls: ['./party-form.component.css']
+  styleUrls: ['./party-form.component.css'],
 })
 export class PartyFormComponent implements OnInit {
   form = typedFormGroup<PartyForm, TypedArraysIn<PartyForm, 'invitees'>>({
-    event: typedFormControl(eventDefault()),
-    invitees: typedFormArray([typedFormControl()])
+    event: typedFormControl({ disabled: true, value: eventDefault() }),
+    invitees: typedFormArray([typedFormControl()]),
   });
 
   get invitees() {
+    this.form.keys.event;
     return this.form.controls.invitees;
   }
 
@@ -66,5 +67,10 @@ export class PartyFormComponent implements OnInit {
     if (Array.isArray(invitees.controls) && invitees.controls.length > 0) {
       invitees.removeAt(invitees.controls.length - 1);
     }
+  }
+
+  toggleEvent() {
+    const e = this.form.controls.event;
+    e.enabled ? e.disable() : e.enable();
   }
 }

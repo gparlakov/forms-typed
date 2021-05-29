@@ -8,5 +8,4 @@ import { PersonContact } from './person-contact/person-contact.model';
 })
 export class AppComponent {
   title = 'forms-typed';
-  person: PersonContact;
 }

@@ -1,28 +1,31 @@
 # Forms Typed (ngx-forms-typed)
-This project aims at providing several tools for Angular Forms development, including: 
+This project aims at providing several tools for Angular Forms development, including:
  - types for strongly typing your `FormControl`s, `FormGroup`s and `FormArray`s based on a Model type
  - functions for instantiating the `TypedFormControl`, `TypedFormGroup` and `TypedFormArray` based on a Model type
- - a helper function that enumerates all controls in a form (group) 
+ - a helper function that enumerates all controls in a form (group)
      - calls methods on each of them
-     - attaches their validators to a parent form (group) 
+     - attaches their validators to a parent form (group)
      - attaches the touched/untouched behavior to a parent form (group)
- - a helper component that shows the form/group/control and allows for editing of the value emitted 
- 
+ - a helper component that shows the form/group/control and allows for editing of the value emitted
+
 ## Getting started
 
-1. `npm install --save-dev ngx-forms-typed` 
+1. `npm install --save-dev ngx-forms-typed`
 2. Create a model for your form (see [example](/src/app/person-contact/person-contact.model.ts))
 3. Inherit `ControlValueAccessorConnector` (see [example](/src/app/person-contact/person-contact.component.ts))
 4. Enjoy your type safety!
- 
+5. See **examples**:
+    - Shallow - https://stackblitz.com/edit/forms-typed-example-shallow?file=src/app/app.component.html
+    - Nested - https://stackblitz.com/edit/forms-typed-example-nested?file=src%2Fapp%2Fapp.component.html
+
 ## Features
 
-## Manually applying strong types to existing forms 
+## Manually applying strong types to existing forms
 ![Manually typed example - value - missing image](./assets/manually-typed-value.png)
 
 Example shows adding the strong type to an existing form control and its value is now **strong typed**!
 
-![Manually typed example - missing image](./assets/manually-typed.jpg) 
+![Manually typed example - missing image](./assets/manually-typed.jpg)
 The controls property is now **strong typed**!
 
 Note: The parameters for the `FormControl` are **not strong typed**. Notice we are passing the `t` as a FormControl and then are trying to access `email`. Hence the `typedFormGroup` function. See [below](#Using-the-helper-functions-to-strong-type-forms)
@@ -56,8 +59,8 @@ Multiple methods as params supported:
 ![For each control in - missing image](./assets/for-each-parent-child-interact.png)
 
 Here we want the validation of the child `Address` form to influence the parent `Person` form. That's the `addValidatorsTo()` method's job. We also want to make the child form touched if we call the parent form `touch()` method. That's the `markAsTouchedSimultaneouslyWith()` method's job. For more details and how they interact see example implementation:
- - [parent component](src/app/party-form/party-form.component.ts) 
- - [child form](src/app/person-contact/person-contact.component.ts) 
+ - [parent component](src/app/party-form/party-form.component.ts)
+ - [child form](src/app/person-contact/person-contact.component.ts)
  - [control value accessor connector](src/app/shared/control-value-accessor-connector.ts)
 
 ## Limitations

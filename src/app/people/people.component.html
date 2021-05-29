@@ -1,0 +1,18 @@
+<div class="centered-content">
+  <form (ngSubmit)="onSubmit()">
+    <fieldset *ngFor="let person of people?.controls; index as i" style="position: relative;" class="fieldset">
+      <legend>{{person?.value?.name || i}}</legend>
+      <fty-person-contact  [formControl]="person"></fty-person-contact>
+      <button mat-button color="warn" (click)="removeAt(i)" style="position:absolute;top:5px;right:5px">✖</button>
+    </fieldset>
+    <button mat-button type="button" (click)="add()">Add person</button>
+    <hr />
+    <button mat-button  color="primary" type="submit">Done</button>
+    <button mat-button  color="warn" type="reset">Reset</button>
+  </form>
+</div>
+
+<show-form-control
+    [control]="people"
+    name="people"
+  ></show-form-control>

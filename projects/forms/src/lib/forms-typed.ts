@@ -5,10 +5,14 @@ import { Observable } from 'rxjs';
  * Type encapsulating the Angular Form options:
  * `emitEvent` - do we emit event;
  * `onlySelf` - do we bubble up to parent
+ * `emitModelToViewChange` - When true or not supplied (the default), each change triggers an onChange event to update the view.
+ * `emitViewToModelChange` - When true or not supplied (the default), each change triggers an ngModelChange event to update the model.
  */
 export interface FormEventOptions {
   emitEvent?: boolean;
   onlySelf?: boolean;
+  emitModelToViewChange?: boolean;
+  emitViewToModelChange?: boolean;
 }
 
 /**
@@ -87,7 +91,7 @@ export interface TypedFormArray<K extends Array<T> = any[], T = any> extends For
  * c.patchValue(['s']) // expects string[]
  * c.patchValue(1) //  COMPILE TIME! type error!
  */
-export function typedFormArray<K extends Array<T> = any[], T = any>(
+export function typedFormArray<T = any, K extends Array<T> = T[]>(
   controls: Array<TypedFormControl<T>>,
   validatorOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null
@@ -104,6 +108,7 @@ export type Controls<K> =
   };
 
 
+// tslint:disable-next-line:ban-types
 type NonGroup = string | number | boolean | Function | null | undefined | never;
 /**
  * This is a strongly typed thin wrapper type around `FormGroup`.
@@ -119,12 +124,14 @@ export interface TypedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>> e
   setControl: <T extends keyof C>(name: T extends string ? T : never, control: C[T]) => void;
   reset: (value?: ResetValue<K>, options?: FormEventOptions) => void;
 }
-export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>>(
+export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>, Key extends keyof K = keyof K>(
   controls: K extends NonGroup ? never : C,
   validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
-): TypedFormGroup<K, C> {
-  return new FormGroup(controls, validatorOrOpts, asyncValidator) as any;
+): TypedFormGroup<K, C> & { keys: Record<Key, string> } {
+  const f = new FormGroup(controls, validatorOrOpts, asyncValidator) as any;
+  f.keys = Object.keys(controls).map((k) => ({ [k]: k }));
+  return f;
 }
 
 /**

@@ -1,7 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onPartyFormSubmit()" class="party-form">
   <fieldset class="fieldset">
     <legend>Event</legend>
-    <fty-event-form formControlName="event"></fty-event-form>
+    <fty-event-form [formControlName]="form.keys.event"></fty-event-form>
+    <button type="button" mat-fab color="primary" (click)="toggleEvent()" class="add-button">
+      {{ form.controls.event.enabled ? 'Disable' : 'Enable' }}
+    </button>
   </fieldset>
   <fieldset class="fieldset">
     <legend>Invited</legend>

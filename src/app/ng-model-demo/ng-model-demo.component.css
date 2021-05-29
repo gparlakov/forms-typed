@@ -1,0 +1,6 @@
+.stand-alone-demo {
+  min-width: 150px;
+  max-width: 500px;
+  display: block;
+  margin: 0 auto;
+}

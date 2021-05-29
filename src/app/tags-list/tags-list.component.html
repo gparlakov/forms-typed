@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" class="centered-content">
+  <div *ngFor="let tag of form.controls;index as i">
+    <mat-form-field>
+      <mat-label>Tag ({{i + 1}})</mat-label>
+      <input matInput [formControl]="tag" />
+    </mat-form-field>
+    <button type="button" mat-button color="warn" (click)="removeAt(i)">❌</button>
+  </div>
+  <button mat-button type="button" (click)="add()">Add tag</button>
+  <hr />
+  <button mat-button  color="primary" type="submit">Done</button>
+  <button mat-button  color="warn" type="reset">Reset</button>
+</form>
+
+<show-form-control [control]="form"></show-form-control>

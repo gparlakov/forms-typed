@@ -1,15 +1,9 @@
-<fty-party-form></fty-party-form>
-
-<mat-divider></mat-divider>
-
-<div class="stand-alone-demo">
-  Stand alone using ngModel
-  <fty-person-contact
-    [(ngModel)]="person"
-    #controlDirective="ngModel"
-  ></fty-person-contact>
-  <show-form-control
-    [control]="controlDirective.control"
-    name="person"
-  ></show-form-control>
-</div>
+<nav>
+  <mat-card>
+    <button mat-button routerLink="party">Party (FormGroup demo)</button>
+    <button mat-button routerLink="tags">Tags list (FormArray demo)</button>
+    <button mat-button routerLink="ngmodel">Person (NgModel demo)</button>
+    <button mat-button routerLink="people">People (FormArray of Person Form Groups)</button>
+  </mat-card>
+</nav>
+<router-outlet></router-outlet>
