@@ -1,8 +1,6 @@
 name: Tests forms typed
 on:
-  push:
-    branches:
-      - master
+  pull_request
 jobs:
   release:
     name: Test forms typed
