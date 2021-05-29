@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.9] - 2021-05-18
 ### Added
 -   allow `emitModelToViewChange?: boolean;` and `emitViewToModelChange?: boolean;` in the method options (e.g. `setValue`)
+### Fixed
+-   typedFormArray takes the item type first vs the array type first i.e. `typedFormArray<string>` vs `typedFormArray<string[], string>`
 
 ## [1.0.8] - 2020-12-12
 ### Fixed

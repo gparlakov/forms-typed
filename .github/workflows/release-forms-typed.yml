@@ -18,6 +18,8 @@ jobs:
           node-version: 12
       - name: Install dependencies
         run: npm ci
+      - name: Build example project (test step)
+        run: npm run build:all
       - name: build lib
         run: npx ng build forms --prod
       - name: Release

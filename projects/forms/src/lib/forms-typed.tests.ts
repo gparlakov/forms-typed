@@ -28,7 +28,7 @@ export interface Model1 {
 
 // values in a typed form control are stronlgy typed
 const f = typedFormGroup<Model>({ name: new FormControl(), email: new FormControl() });
-f.valueChanges.subscribe(v => console.log(v));
+f.valueChanges.subscribe((v) => console.log(v));
 // controls are strongly typed too
 console.log(f.controls.email);
 f.setControl('name', typedFormControl());
@@ -36,12 +36,12 @@ f.setControl('name', typedFormControl());
 // vs standard form group are - neither controls nor values are typed
 const f1 = new FormGroup({ t: new FormControl() });
 console.log(f1.controls.any.value); // will break runtime
-f1.valueChanges.subscribe(v => console.log(v)); // v is not strongly typed
+f1.valueChanges.subscribe((v) => console.log(v)); // v is not strongly typed
 
 // form group with both controls and form arrays - strongly typed
 const f2 = typedFormGroup<Model1, TypedControlsIn<Model1, never, 'names'>>({
   names: typedFormArray([]),
-  email: typedFormControl()
+  email: typedFormControl(),
 });
 console.log(f2.controls.email);
 console.log(f2.controls.names.setControl(0, typedFormControl('')));
@@ -59,7 +59,7 @@ f3.setControl('email', typedFormControl());
 const f4 = typedFormGroup<Model1, TypedControlsIn<Model1, never, 'names'>>({
   names: typedFormArray([]),
   // ❌ should break
-  email: typedFormGroup<string>('test') // we disallow form group for simple types and null
+  email: typedFormGroup<string>('test'), // we disallow form group for simple types and null
 });
 f4.reset({ names: { value: [''], disabled: true }, email: '' });
 
@@ -82,9 +82,7 @@ const person = typedFormGroup<Person>({ name: typedFormControl(), address: typed
 const address = typedFormGroup<Address>({ postCode: typedFormControl(), line: typedFormControl() });
 
 // address each control in dot-chain type of API
-forEachControlIn(address)
-  .addValidatorsTo(person)
-  .markAsTouchedSimultaneouslyWith(person);
+forEachControlIn(address).addValidatorsTo(person).markAsTouchedSimultaneouslyWith(person);
 
 // AbstractControlOptions in form control
 typedFormControl('', { updateOn: 'blur' }, (v) => Promise.resolve(null));
@@ -100,11 +98,14 @@ typedFormControl('value', {
 });
 
 // AbstractControlOptions in form group
-typedFormGroup<{m: string}>({m: typedFormControl()}, {
-  updateOn: 'blur',
-  validators: (v) => null,
-  asyncValidators: [(v) => Promise.resolve(null), (v) => Promise.resolve({ e: 'error' })],
-});
+typedFormGroup<{ m: string }>(
+  { m: typedFormControl() },
+  {
+    updateOn: 'blur',
+    validators: (v) => null,
+    asyncValidators: [(v) => Promise.resolve(null), (v) => Promise.resolve({ e: 'error' })],
+  }
+);
 
 // AbstractControlOptions in form array
 typedFormArray<string[]>([typedFormControl()], {
@@ -112,5 +113,18 @@ typedFormArray<string[]>([typedFormControl()], {
   validators: (v) => null,
   asyncValidators: [(v) => Promise.resolve(null), (v) => Promise.resolve({ e: 'error' })],
 });
-// allow disabled setValue state
-f.controls.email.setValue({ disabled: true, value: 'string' });
+
+// typed form array with the single type only
+const tags = typedFormArray<string>([
+  typedFormControl('javascript'),
+  typedFormControl('typescript'),
+  typedFormControl('strong types'),
+  typedFormControl('strong code'),
+]);
+
+// typed form array push ❌ breaks because expecting string
+tags.push(typedFormControl(1));
+// patch value works with ❌ exception of 1 - not a string
+tags.patchValue(['1', '2', '3', 1]);
+
+

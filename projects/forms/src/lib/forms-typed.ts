@@ -91,7 +91,7 @@ export interface TypedFormArray<K extends Array<T> = any[], T = any> extends For
  * c.patchValue(['s']) // expects string[]
  * c.patchValue(1) //  COMPILE TIME! type error!
  */
-export function typedFormArray<K extends Array<T> = any[], T = any>(
+export function typedFormArray<T = any, K extends Array<T> = T[]>(
   controls: Array<TypedFormControl<T>>,
   validatorOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null
