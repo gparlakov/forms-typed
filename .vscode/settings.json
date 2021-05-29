@@ -2,5 +2,11 @@
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "cSpell.words": [
         "Tidelift"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#eab353",
+        "titleBar.inactiveBackground": "#eab35399",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveForeground": "#15202b99"
+    }
 }
