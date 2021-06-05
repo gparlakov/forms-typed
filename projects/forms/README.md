@@ -6,7 +6,6 @@ This project aims at providing several tools for Angular Forms development, incl
      - calls methods on each of them
      - attaches their validators to a parent form (group)
      - attaches the touched/untouched behavior to a parent form (group)
- - a helper component that shows the form/group/control and allows for editing of the value emitted
 
 ## Getting started
 
@@ -63,7 +62,57 @@ Here we want the validation of the child `Address` form to influence the parent 
  - [child form](src/app/person-contact/person-contact.component.ts)
  - [control value accessor connector](src/app/shared/control-value-accessor-connector.ts)
 
-## Limitations
+## ControlValueAccessorConnector (CVAC)
+
+A component that does all the heavy lifting when implementing a custom `ControlValueAccessor`
+- implement the required methods (`registerOnChange`, `registerOnTouched` `writeValue` and `setDisabledState`)
+- expose itself as `NG_VALUE_ACCESSOR` to the form control
+- make sure all the statuses are updated as needed up and down (from the parent down and from itself up)
+
+Example - the constructor `super` and `ngOnInit` super calls are all that's needed:
+```ts
+@Component({
+  selector: 'fty-event-form',
+  templateUrl: './event-form.component.html',
+  styleUrls: ['./event-form.component.css']
+})
+export class EventFormComponent implements OnInit extends ControlValueAccessorConnector<
+    EventForm,
+    TypedControlsIn<EventForm>
+  >
+{
+  constructor(@Optional() @Self() directive: NgControl) {
+    super(
+      directive,
+      typedFormGroup({
+        eventName: typedFormControl<string>(undefined, Validators.required),
+        location: typedFormControl<string>(),
+        dateStart: typedFormControl(defaultDateStart),
+        timeStart: typedFormControl(defaultTimeStart)
+      })
+    );
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+  }
+  onNameInputBlur() {
+    this.onTouch();
+  }
+  onLocationInputBlur() {
+    this.onTouch();
+  }
+  onStartDateInputBlur() {
+    this.onTouch();
+  }
+  onStartTimeInputBlur() {
+    this.onTouch();
+  }
+}
+```
+
+
+### Limitations of the CVAC
 - It requires injecting NgControl. Like [so](https://github.com/gparlakov/forms-typed/blob/21e99c91877746b506dd64ad0e5a127eeed15bac/src/app/person-contact/person-contact.component.ts#L13)
 - It requires calling super.ngOnInit from the child ngOnInit. Like [so](https://github.com/gparlakov/forms-typed/blob/21e99c91877746b506dd64ad0e5a127eeed15bac/src/app/person-contact/person-contact.component.ts#L24)
 - At present .get('name') is not strongly typed - could be if users want it

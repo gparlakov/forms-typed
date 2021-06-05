@@ -24,7 +24,6 @@ export class PartyFormComponent implements OnInit {
   });
 
   get invitees() {
-    this.form.keys.event;
     return this.form.controls.invitees;
   }
 
