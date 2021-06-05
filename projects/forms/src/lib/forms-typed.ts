@@ -1,4 +1,12 @@
-import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import {
+  AbstractControl,
+  AbstractControlOptions,
+  AsyncValidatorFn,
+  FormArray,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 
 /**
@@ -19,7 +27,6 @@ export interface FormEventOptions {
  * A type wrapper around the reset value. It could be partial of the type of the form. Or even describe which form fields are to be disabled
  */
 export type ResetValue<K> = Partial<{ [key in keyof K]: K[key] | { value: K[key]; disabled: boolean } }>;
-
 
 /**
  * Typed form control is an `AbstractControl` with strong typed properties and methods. Can be created using `typedFormControl` function
@@ -51,7 +58,7 @@ export interface TypedFormControl<K> extends FormControl, AbstractControl {
  * c.patchValue(1) //  COMPILE TIME! type error!
  */
 export function typedFormControl<T>(
-  v?: T | {value: T; disabled: boolean},
+  v?: T | { value: T; disabled: boolean },
   validatorsOrOptions?: ValidatorFn | AbstractControlOptions,
   asyncValidators?: AsyncValidatorFn
 ): TypedFormControl<T> {
@@ -102,11 +109,10 @@ export function typedFormArray<T = any, K extends Array<T> = T[]>(
 export type Controls<K> =
   | TypedControlsIn<K>
   | {
-    [k in keyof K]: K[k] extends Array<infer T>
-    ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k], T>
-    : TypedFormControl<K[k]> | TypedFormGroup<K[k]>
-  };
-
+      [k in keyof K]: K[k] extends Array<infer T>
+        ? TypedFormControl<K[k]> | TypedFormGroup<K[k]> | TypedFormArray<K[k], T>
+        : TypedFormControl<K[k]> | TypedFormGroup<K[k]>;
+    };
 
 // tslint:disable-next-line:ban-types
 type NonGroup = string | number | boolean | Function | null | undefined | never;
@@ -130,7 +136,7 @@ export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>, Ke
   asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
 ): TypedFormGroup<K, C> & { keys: Record<Key, string> } {
   const f = new FormGroup(controls, validatorOrOpts, asyncValidator) as any;
-  f.keys = Object.keys(controls).map((k) => ({ [k]: k }));
+  f.keys = Object.keys(controls).reduce((acc, k) => ({ ...acc, [k]: k }), {});
   return f;
 }
 
@@ -139,12 +145,12 @@ export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>, Ke
  */
 export type TypedControlsIn<K, groups extends keyof K = never, arrays extends keyof K = never> = {
   [key in keyof K]: key extends groups
-  ? TypedFormGroup<K[key]>
-  : key extends arrays
-  ? K[key] extends Array<infer T>
-  ? TypedFormArray<T[], T>
-  : never
-  : TypedFormControl<K[key]>
+    ? TypedFormGroup<K[key]>
+    : key extends arrays
+    ? K[key] extends Array<infer T>
+      ? TypedFormArray<T[], T>
+      : never
+    : TypedFormControl<K[key]>;
 };
 
 /**
