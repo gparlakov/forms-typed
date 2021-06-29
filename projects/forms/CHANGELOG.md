@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.2] - 2021-06-29
+### Fixed
+- typedFormControl now accepts `ValidatorFn[]` or `AsyncValidatorFn[]` like default Angular FormControl
+
 ## [1.1.1] - 2021-06-05
 ### Fixed
 -   the form.keys was mistakenly an `Array` while advertised as a `Record<keyof T, string>`
