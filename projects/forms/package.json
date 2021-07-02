@@ -1,21 +1,18 @@
 {
-  "name": "ngx-forms-typed",
-  "version": "1.0.8",
-  "repository": "https://github.com/gparlakov/forms-typed",
+  "name": "@mobisys/ngx-forms-typed",
+  "version": "1.0.0",
+  "repository":"https://github.com/MobisysGmbH/ngx-forms-typed.git",
   "maintainers": [
-    "gparlakov@gmail.com"
+    "info@mobisys.de"
   ],
   "scripts": {
     "forms": "ng build forms --prod"
   },
-  "bugs": {
-    "url": "https://github.com/gparlakov/forms-typed",
-    "email": "gparlakov@gmail.com"
-  },
+
   "author": {
-    "name": "Georgi Parlakov"
+    "author": "Mobisys Client Development Team <info@mobisys.de>"
   },
-  "homepage": "https://github.com/gparlakov/forms-typed/tree/master/projects/forms#README",
+  "homepage": "https://github.com/MobisysGmbH/ngx-forms-typed/blob/master/README.md",
   "description": "Angular Forms Typed provides types and helper functions fully compatible with original Angular forms",
   "peerDependencies": {
     "@angular/core": ">=2.0.0",

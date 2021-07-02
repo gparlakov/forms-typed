@@ -8,4 +8,4 @@
 
 ## Reporting a Vulnerability
 
-Please report vulnerabilities to gparlakov@gmail.com or [https://tidelift.com/security](https://tidelift.com/security) as this project is Tidelift-ed
+Please report vulnerabilities to info@mobisys.de
