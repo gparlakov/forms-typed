@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "semantic-release": "semantic-release",
+    "semantic-release": "semantic-release --no-ci",
     "build:all": "ng build forms --prod && ng build"
   },
   "private": true,
