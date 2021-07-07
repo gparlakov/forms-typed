@@ -51,6 +51,7 @@ export class PartyFormComponent implements OnInit {
           // do submit
           this.submitting = false;
           console.log(this.form.value);
+          console.log(this.form.getRawValue());
         }, 5000);
       } else {
         this.submitting = false;
