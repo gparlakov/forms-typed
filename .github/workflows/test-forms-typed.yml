@@ -17,5 +17,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: build lib
-        run: npx ng build forms && npx ng build show-form-control && npx ng build
+        run: npm run build:all
 
