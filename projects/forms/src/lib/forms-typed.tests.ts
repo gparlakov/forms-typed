@@ -131,7 +131,12 @@ tags.patchValue(['1', '2', '3', 1]);
 const tg = typedFormGroup<Model>({
   name: typedFormControl(),
   email: typedFormControl()
-})
+});
 
-tg.keys.email
+const emailControlKey = tg.keys.email;
 
+
+
+
+// support validator function array in typedFormControl
+const validators = typedFormControl<string>('', [a => null, () => ({})], [async () => null, async () => Promise.resolve({})]);

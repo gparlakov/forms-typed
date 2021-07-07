@@ -2,11 +2,9 @@
 
 Hi, and thanks for your interest!
 
-There are 2 libraries living in this repo:
+There are:
 - `ngx-forms-typed` - /projects/forms
-- `ngx-show-form-control` - /projects/show-form-control
-
-And there's also an example app that lives in /src folder.
+- `/src` - an example app showcasing usage of the lib
 
 ## Setup
 We are using a couple of libraries to setup our process of contributing:
