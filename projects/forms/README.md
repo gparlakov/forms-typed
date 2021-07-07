@@ -9,7 +9,7 @@ This project aims at providing several tools for Angular Forms development, incl
 
 ## Getting started
 
-1. `npm install --save-dev ngx-forms-typed`
+1. `npm i ngx-forms-typed`
 2. Create a model for your form (see [example](/src/app/person-contact/person-contact.model.ts))
 3. Inherit `ControlValueAccessorConnector` (see [example](/src/app/person-contact/person-contact.component.ts))
 4. Enjoy your type safety!
