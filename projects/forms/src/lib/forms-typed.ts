@@ -129,6 +129,7 @@ export interface TypedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>> e
   value: K;
   setControl: <T extends keyof C>(name: T extends string ? T : never, control: C[T]) => void;
   reset: (value?: ResetValue<K>, options?: FormEventOptions) => void;
+  getRawValue: () => K;
 }
 export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>, Key extends keyof K = keyof K>(
   controls: K extends NonGroup ? never : C,
