@@ -2,7 +2,7 @@
   "name": "ngx-forms-typed",
   "version": "1.0.8",
   "repository": "https://github.com/gparlakov/forms-typed",
-  "licence": "MIT",
+  "license" : "MIT",
   "maintainers": [
     "gparlakov@gmail.com"
   ],
