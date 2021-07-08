@@ -7,6 +7,9 @@ This project aims at providing several tools for Angular Forms development, incl
      - attaches their validators to a parent form (group)
      - attaches the touched/untouched behavior to a parent form (group)
 
+
+[CHANGELOG](./CHANGELOG.md)
+
 ## Getting started
 
 1. `npm i ngx-forms-typed`

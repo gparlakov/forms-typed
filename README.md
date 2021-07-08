@@ -6,6 +6,9 @@ Main project is ngx-forms-typed
 
 See [ngx-forms-typed Readme.md here](./projects/forms/README.md)
 
+[CHANGELOG](./projects/forms/CHANGELOG.md)
+
+[Contributing](./CONTRIBUTORS.md)
 ## Example app
 
 An app that uses all features of `ngx-forms-typed`.
