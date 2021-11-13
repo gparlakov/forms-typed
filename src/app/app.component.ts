@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PersonContact } from './person-contact/person-contact.model';
 
 @Component({
   selector: 'fty-root',
