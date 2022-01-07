@@ -145,7 +145,7 @@ export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>, Ke
  * Helper type for specifying what control we expect for each property from the model.
  */
 export type TypedControlsIn<K, groups extends keyof K = never, arrays extends keyof K = never> = {
-  [key in keyof K]: key extends groups
+  [key in keyof K]-?: key extends groups
     ? TypedFormGroup<K[key]>
     : key extends arrays
     ? K[key] extends Array<infer T>
