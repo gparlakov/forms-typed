@@ -96,12 +96,12 @@ export function forEachControlIn(form: FormGroup | FormArray | TypedFormGroup<an
     },
     /**
      * Get the errors in the controls from our form and append their errors to the `form` (in forEachControlIn(form) form)
-     * @param ctrl the control that should be invalid if on of our controls is
+     * @param parentControl the control that should be invalid if on of our controls is
      */
-    addValidatorsTo(ctrl: AbstractControl) {
-      if (ctrl != null) {
-        ctrl.validator = Validators.compose([
-          ctrl.validator,
+    addValidatorsTo(parentControl: AbstractControl) {
+      if (parentControl != null) {
+        parentControl.validator = Validators.compose([
+          parentControl.validator,
           () => {
             // could overwrite some errors - but we only need it to know the "parent" form is valid or not
             const errors = controls.reduce((e, next) => ({ ...e, ...next.errors }), {});
