@@ -28,7 +28,7 @@ interface FormGroupLike {
  *
  * forEachControlIn(form).call('markAsTouched') - will iterate over all controls and call that method
  */
-export function forEachControlIn(form: FormGroup | FormArray | TypedFormGroup<any> | TypedFormArray<any>) {
+export function forEachControlIn(form: FormGroup | FormArray) {
   const controls: AbstractControl[] =
     form != null && form.controls != null
       ? Array.isArray(form.controls)
@@ -103,7 +103,8 @@ export function forEachControlIn(form: FormGroup | FormArray | TypedFormGroup<an
         parentControl.validator = Validators.compose([
           parentControl.validator,
           () => {
-            // could overwrite some errors - but we only need it to know the "parent" form is valid or not
+            // could overwrite some errors - but we only need it to communicate to the "parent" form that
+            // these controls here are valid or not
             const errors = controls.reduce((e, next) => ({ ...e, ...next.errors }), {});
 
             return controls.some(c => c.errors != null) ? errors : null;
