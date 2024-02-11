@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, UntypedFormArray, UntypedFormGroup, Validators } from '@angular/forms';
 import { TypedFormGroup, TypedFormArray } from './forms-typed';
 
 export type Methods = keyof Pick<
@@ -28,7 +28,7 @@ interface FormGroupLike {
  *
  * forEachControlIn(form).call('markAsTouched') - will iterate over all controls and call that method
  */
-export function forEachControlIn(form: FormGroup | FormArray) {
+export function forEachControlIn(form: UntypedFormGroup | UntypedFormArray) {
   const controls: AbstractControl[] =
     form != null && form.controls != null
       ? Array.isArray(form.controls)

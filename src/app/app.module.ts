@@ -12,7 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { ShowFormControlModule } from 'ngx-show-form-control';
+// import { ShowFormControlModule } from 'ngx-show-form-control';
 import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 import { EventFormComponent } from './event-form/event-form.component';
@@ -42,7 +42,7 @@ import { PeopleComponent } from './people/people.component';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ShowFormControlModule.for(environment.production ? 'prod' : 'dev'),
+    // ShowFormControlModule.for(environment.production ? 'prod' : 'dev'),
     MatIconModule,
     MatDividerModule,
     MatProgressSpinnerModule,

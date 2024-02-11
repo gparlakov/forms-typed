@@ -2,9 +2,9 @@ import {
   AbstractControl,
   AbstractControlOptions,
   AsyncValidatorFn,
-  FormArray,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidatorFn,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -37,7 +37,7 @@ export type ResetValue<K> = Partial<{ [key in keyof K]: K[key] | { value: K[key]
  * c.patchValue('s') // expects string
  * c.patchValue(1) //  COMPILE TIME! type error!
  */
-export interface TypedFormControl<K> extends FormControl, AbstractControl {
+export interface TypedFormControl<K> extends UntypedFormControl, AbstractControl {
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
   patchValue: (v: Partial<K>, options?: FormEventOptions) => void;
@@ -62,7 +62,7 @@ export function typedFormControl<T>(
   validatorsOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions,
   asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[]
 ): TypedFormControl<T> {
-  return new FormControl(v, validatorsOrOptions, asyncValidators);
+  return new UntypedFormControl(v, validatorsOrOptions, asyncValidators);
 }
 
 /**
@@ -74,7 +74,7 @@ export function typedFormControl<T>(
  * c.patchValue(['s']) // expects string[]
  * c.patchValue(1) //  COMPILE TIME! type error!
  */
-export interface TypedFormArray<K extends Array<T> = any[], T = any> extends FormArray {
+export interface TypedFormArray<K extends Array<T> = any[], T = any> extends UntypedFormArray {
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
   patchValue: (v: K, options?: FormEventOptions) => void;
@@ -103,7 +103,7 @@ export function typedFormArray<T = any, K extends Array<T> = T[]>(
   validatorOrOptions?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null
 ): TypedFormArray<K, T> {
-  return new FormArray(controls, validatorOrOptions, asyncValidators) as any;
+  return new UntypedFormArray(controls, validatorOrOptions, asyncValidators) as any;
 }
 
 export type Controls<K> =
@@ -114,13 +114,12 @@ export type Controls<K> =
         : TypedFormControl<K[k]> | TypedFormGroup<K[k]>;
     };
 
-// tslint:disable-next-line:ban-types
 type NonGroup = string | number | boolean | Function | null | undefined | never;
 /**
  * This is a strongly typed thin wrapper type around `FormGroup`.
  * Can be created using the `typedFormGroup` function
  */
-export interface TypedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>> extends FormGroup, TypedFormControl<K> {
+export type TypedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>> = K extends NonGroup ? never : UntypedFormGroup & TypedFormControl<K> & {
   controls: K extends NonGroup ? never : C;
   valueChanges: Observable<K>;
   statusChanges: Observable<'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'>;
@@ -136,7 +135,7 @@ export function typedFormGroup<K, C extends Controls<K> = TypedControlsIn<K>, Ke
   validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
   asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
 ): TypedFormGroup<K, C> & { keys: Record<Key, string> } {
-  const f = new FormGroup(controls, validatorOrOpts, asyncValidator) as any;
+  const f = new UntypedFormGroup(controls, validatorOrOpts, asyncValidator) as any;
   f.keys = Object.keys(controls).reduce((acc, k) => ({ ...acc, [k]: k }), {});
   return f;
 }

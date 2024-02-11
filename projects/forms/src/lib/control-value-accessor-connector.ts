@@ -1,9 +1,12 @@
-import { OnInit, Optional, Self, OnDestroy } from '@angular/core';
+import { OnInit, Optional, Self, OnDestroy, Component, Directive } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { TypedFormGroup, Controls } from './forms-typed';
 import { forEachControlIn } from './forms-util';
 import { Subscription } from 'rxjs';
 
+@Directive({
+
+})
 export class ControlValueAccessorConnector<T, C extends Controls<T> = Controls<T>>
   implements OnInit, OnDestroy, ControlValueAccessor {
   protected subs = new Subscription();

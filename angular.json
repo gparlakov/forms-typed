@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "demo-app:build"
+            "buildTarget": "demo-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "demo-app:build:production"
+              "buildTarget": "demo-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "demo-app:build"
+            "buildTarget": "demo-app:build"
           }
         },
         "test": {
@@ -163,7 +163,6 @@
       }
     }
   },
-  "defaultProject": "demo-app",
   "cli": {
     "analytics": "3132a3c7-80f3-4cb7-9206-d2c1b7e1345a"
   }
