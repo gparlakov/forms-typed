@@ -4,6 +4,7 @@
     "importHelpers": false
   },
   "angularCompilerOptions": {
-    "enableIvy": false
+    "enableIvy": false,
+    "compilationMode": "partial"
   }
 }

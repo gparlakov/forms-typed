@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.2.0 - 2024-02-11
+### Added
+-   Support for latest v17 of Angular
+
 ## [1.1.6] - 2021-07-09
 ### Fixed
 -   missing npm license due to typo
